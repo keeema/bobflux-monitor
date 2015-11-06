@@ -2,7 +2,8 @@
 /node_modules
 /example/node_modules
 /uploads
-/**/.vscode
+/.vscode
+/example/.vscode
 
 !/package/*.*
 !/example/dist/**/*.js
