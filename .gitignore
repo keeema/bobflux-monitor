@@ -1,0 +1,11 @@
+/**/*.js
+/node_modules
+/example/node_modules
+/uploads
+/build
+/specs
+
+!/package/*.*
+!/example/dist/*.*
+!/example/*.*
+!/*.*
