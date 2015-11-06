@@ -2,10 +2,9 @@
 /node_modules
 /example/node_modules
 /uploads
-/build
-/specs
+/**/.vscode
 
 !/package/*.*
-!/example/dist/*.*
-!/example/*.*
+!/example/dist/**/*.js
+!/example/*.js
 !/*.*
