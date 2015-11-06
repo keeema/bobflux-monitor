@@ -53,8 +53,9 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
                     rows.create({
                         rows: ctx.data.stateStamps.map(function (stateStamp, index) {
                             return {
-                                header: index.toString() + ' - ' + stateStamp.change,
+                                header: index.toString(),
                                 info: stateStamp.time.toLocaleTimeString(),
+                                frames: stateStamp.frames,
                                 onGo: function () {
                                     index_1.setState(ctx.data.cursor, stateStamp.state);
                                     b.invalidate();
@@ -74,8 +75,14 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
         if (cursor === void 0) { cursor = { key: '' }; }
         var data = createDefaultData(cursor);
         var callback = function (m, p) {
-            if (p && typeof p === 'object') {
-                data.stateStamps.push({ change: 'application', time: new Date(), state: p });
+            if (m && p && m.indexOf('Current state') >= 0) {
+                if (!data.stateStamps.some(function (stateStamp) { return stateStamp.state === p; }))
+                    data.stateStamps.push({
+                        change: 'change',
+                        time: new Date(),
+                        state: p,
+                        frames: b.frame()
+                    });
             }
         };
         b.addRoot(function () { return createMonitor(data); });

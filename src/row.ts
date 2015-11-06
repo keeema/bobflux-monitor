@@ -14,6 +14,7 @@ let rowStyle = b.styleDef({
 export interface IData {
     header: string;
     info: string;
+    frames: number;
     onGo: () => void;
     onCopy: () => void;
 }
@@ -29,6 +30,7 @@ export let create = b.createVirtualComponent<IData>({
         me.children = [
             { tag: 'div', children: ctx.data.header },
             { tag: 'div', children: ctx.data.info },
+            { tag: 'div', children: 'Frames: '+ ctx.data.frames },
             button.create({ title: 'GO', style: button.style.actionButton, onClick: ctx.data.onGo }),
             button.create({ title: 'COPY', style: button.style.actionButton, onClick: ctx.data.onCopy })
         ];

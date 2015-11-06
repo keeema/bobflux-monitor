@@ -21,6 +21,7 @@ interface IStateStamp {
     change: string;
     state: IState;
     time: Date;
+    frames: number;
 }
 
 interface IData {
@@ -80,10 +81,12 @@ let createMonitor = b.createComponent<IData>({
                 rows.create({
                     rows: ctx.data.stateStamps.map((stateStamp, index) => {
                         return {
-                            header: index.toString() + ' - ' + stateStamp.change,
+                            header: index.toString(),
                             info: stateStamp.time.toLocaleTimeString(),
+                            frames: stateStamp.frames,
                             onGo: () => {
                                 setState(ctx.data.cursor, stateStamp.state);
+
                                 b.invalidate();
                             },
                             onCopy: () => {
@@ -101,8 +104,14 @@ let createMonitor = b.createComponent<IData>({
 export let init = (cursor: ICursor<any> = { key: '' }): (m, p) => void => {
     let data = createDefaultData(cursor);
     let callback = (m, p) => {
-        if (p && typeof p === 'object') {
-            data.stateStamps.push({ change: 'application', time: new Date(), state: p });
+        if (m && p && m.indexOf('Current state') >= 0) {
+            if (!data.stateStamps.some(stateStamp => stateStamp.state === p))
+                data.stateStamps.push({ 
+                    change: 'change', 
+                    time: new Date(), 
+                    state: p,
+                    frames: b.frame() 
+                });
         }
     };
 

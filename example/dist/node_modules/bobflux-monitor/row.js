@@ -14,6 +14,7 @@ define(["require", "exports", 'node_modules/bobril/index', './button'], function
             me.children = [
                 { tag: 'div', children: ctx.data.header },
                 { tag: 'div', children: ctx.data.info },
+                { tag: 'div', children: 'Frames: ' + ctx.data.frames },
                 button.create({ title: 'GO', style: button.style.actionButton, onClick: ctx.data.onGo }),
                 button.create({ title: 'COPY', style: button.style.actionButton, onClick: ctx.data.onCopy })
             ];

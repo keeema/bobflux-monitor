@@ -2,6 +2,7 @@ import * as b from 'node_modules/bobril/index';
 export interface IData {
     header: string;
     info: string;
+    frames: number;
     onGo: () => void;
     onCopy: () => void;
 }
