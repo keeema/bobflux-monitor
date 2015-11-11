@@ -5,7 +5,8 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
         right: '0px',
         backgroundColor: '#ddd',
         overflow: 'auto',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        zIndex: 1000
     });
     var openedStyle = b.styleDef({
         bottom: '0px'
@@ -74,15 +75,22 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
     exports.init = function (cursor) {
         if (cursor === void 0) { cursor = { key: '' }; }
         var data = createDefaultData(cursor);
+        var routeUrl = '';
         var callback = function (m, p) {
             if (m && p && m.indexOf('Current state') >= 0) {
-                if (!data.stateStamps.some(function (stateStamp) { return stateStamp.state === p; }))
-                    data.stateStamps.push({
-                        change: 'change',
-                        time: new Date(),
-                        state: p,
-                        frames: b.frame()
-                    });
+                if (!routeUrl || routeUrl === window.location.href) {
+                    if (!data.stateStamps.some(function (stateStamp) { return stateStamp.state === p; }))
+                        data.stateStamps.push({
+                            change: 'change',
+                            time: new Date(),
+                            state: p,
+                            frames: b.frame()
+                        });
+                }
+                else {
+                    data.stateStamps = [];
+                }
+                routeUrl = window.location.href;
             }
         };
         b.addRoot(function () { return createMonitor(data); });

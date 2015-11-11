@@ -10,7 +10,8 @@ let containerStyle = b.styleDef({
     right: '0px',
     backgroundColor: '#ddd',
     overflow: 'auto',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    zIndex: 1000
 })
 
 let openedStyle = b.styleDef({
@@ -103,8 +104,10 @@ let createMonitor = b.createComponent<IData>({
 
 export let init = (cursor: ICursor<any> = { key: '' }): (m, p) => void => {
     let data = createDefaultData(cursor);
+    let routeUrl = '';
     let callback = (m, p) => {
         if (m && p && m.indexOf('Current state') >= 0) {
+            if(!routeUrl || routeUrl === window.location.href ){
             if (!data.stateStamps.some(stateStamp => stateStamp.state === p))
                 data.stateStamps.push({ 
                     change: 'change', 
@@ -112,6 +115,11 @@ export let init = (cursor: ICursor<any> = { key: '' }): (m, p) => void => {
                     state: p,
                     frames: b.frame() 
                 });
+            } else {
+                data.stateStamps = [];
+            }
+            
+            routeUrl = window.location.href ;
         }
     };
 

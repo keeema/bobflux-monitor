@@ -32,7 +32,7 @@ gulp.task('cleanPkg', function () {
 });
 
 gulp.task('copyTsToPkg', ['cleanPkg'], function () {
-  return gulp.src(['./src/**/*.ts', '!./src/**/*.d.ts', './package.json'])
+  return gulp.src(['./src/**/*.ts', '!./src/**/*.d.ts', './package.json', './readme.md'])
     .pipe(flatten())
     .pipe(gulp.dest(pkg));
 });
