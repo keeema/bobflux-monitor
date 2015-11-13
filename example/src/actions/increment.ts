@@ -1,4 +1,4 @@
-import { createAction, shallowCopy } from '../../node_modules/bobflux/dist/src/index';
+import { createAction, shallowCopy } from '../../node_modules/bobflux/dist/index';
 import { appCursor, IAppState } from '../state';
 
 

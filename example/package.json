@@ -13,9 +13,9 @@
   "license": "",
   "dependencies": {  
     "bobril": "^4.15.0",
-    "fun-model": "0.0.7",
-    "bobflux": "^0.0.9",
-    "bobflux-monitor": "^0.0.6"
+    "fun-model": "0.1.*",
+    "bobflux": "1.0.*",
+    "bobflux-monitor": "*"
   },
   "devDependencies": {
     "bobril-build": "^0.3.3",

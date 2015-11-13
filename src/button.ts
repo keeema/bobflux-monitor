@@ -20,7 +20,7 @@ export let style = {
         borderStyle: 'solid',
         borderWidth: '1px',
         cursor: 'pointer'
-    }),
+    }, { hover: { backgroundColor: '#585858' } })
 };
 
 export interface IData {

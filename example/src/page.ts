@@ -1,5 +1,5 @@
 import * as b from '../node_modules/bobril/index';
-import { getState } from '../node_modules/bobflux/dist/src/index';
+import { getState } from '../node_modules/bobflux/dist/index';
 import { appCursor }  from './state';
 import { increment }  from './actions/increment';
 

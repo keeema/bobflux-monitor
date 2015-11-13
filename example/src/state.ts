@@ -1,4 +1,4 @@
-import { IState, ICursor } from '../node_modules/bobflux/dist/src/index';
+import { IState, ICursor } from '../node_modules/bobflux/dist/index';
 
 export interface IAppState {
     counter: number;

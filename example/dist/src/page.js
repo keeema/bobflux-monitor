@@ -1,4 +1,4 @@
-define(["require", "exports", '../node_modules/bobril/index', '../node_modules/bobflux/dist/src/index', './state', './actions/increment'], function (require, exports, b, index_1, state_1, increment_1) {
+define(["require", "exports", '../node_modules/bobril/index', '../node_modules/bobflux/dist/index', './state', './actions/increment'], function (require, exports, b, index_1, state_1, increment_1) {
     var createCounter = b.createComponent({
         render: function (ctx, me) {
             var state = index_1.getState(state_1.appCursor);
