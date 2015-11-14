@@ -1,6 +1,6 @@
 {
   "name": "bobflux-monitor",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Component for time travelling in bobflux application state history.",
   "author": {
     "name": "keeema"

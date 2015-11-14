@@ -1,5 +1,5 @@
 import * as b from 'node_modules/bobril/index';
-import { setState, IState, ICursor } from 'node_modules/fun-model/dist/src/index';
+import { getState, setState, IState, ICursor } from 'node_modules/fun-model/dist/index';
 import * as button from './button';
 import * as rows from './rows';
 import * as textbox from './textbox';
@@ -11,6 +11,7 @@ let containerStyle = b.styleDef({
     backgroundColor: '#ddd',
     overflow: 'auto',
     overflowX: 'hidden',
+    fontFamily: 'Lucida Console',
     zIndex: 1000
 })
 
@@ -34,6 +35,7 @@ interface IData {
 interface ICtx extends b.IBobrilCtx {
     data: IData;
     stateJSON?: string;
+    setFocusForCopy: boolean;
 }
 
 let createDefaultData = (cursor: ICursor<any>): IData=> {
@@ -52,6 +54,8 @@ let createMonitor = b.createComponent<IData>({
         if (ctx.data.isOpen)
             b.style(me, openedStyle);
 
+        let state = getState(ctx.data.cursor);
+
         me.children = [
             button.create({
                 title: ctx.data.isOpen ? 'HIDE >' : '<',
@@ -62,36 +66,48 @@ let createMonitor = b.createComponent<IData>({
                 }
             }),
             !!ctx.data.isOpen && [
-                textbox.create({
-                    value: ctx.stateJSON,
-                    onChange: (value: string) => {
-                        ctx.stateJSON = value;
-                        b.invalidate(ctx);
-                    }
-                }),
-                button.create({
-                    title: 'GO',
-                    style: button.style.actionButton,
-                    onClick: () => {
-                        if (!ctx.stateJSON)
-                            return;
-                        setState(ctx.data.cursor, JSON.parse(ctx.stateJSON));
-                        b.invalidate();
-                    },
-                }),
+                b.styledDiv([
+                    textbox.create({
+                        value: ctx.stateJSON,
+                        setFocus: ctx.setFocusForCopy,
+                        style: textbox.style.copyState,
+                        onChange: (value: string) => {
+                            ctx.stateJSON = value;
+                            b.invalidate(ctx);
+                        },
+                        onKeyDown: (event: b.IKeyDownUpEvent) => {
+                            if (event.ctrl && event.which === 67) {
+                                ctx.stateJSON = '';
+                                b.invalidate();
+                            }
+                        }
+                    }),
+                    !!ctx.stateJSON && button.create({
+                        title: 'GO',
+                        style: button.style.actionButton,
+                        onClick: () => {
+                            if (!ctx.stateJSON)
+                                return;
+                            setState(ctx.data.cursor, JSON.parse(ctx.stateJSON));
+                            b.invalidate();
+                        },
+                    })
+                ]),
                 rows.create({
                     rows: ctx.data.stateStamps.map((stateStamp, index) => {
                         return {
                             header: index.toString(),
                             info: stateStamp.time.toLocaleTimeString(),
                             frames: stateStamp.frames,
+                            isActive: state === stateStamp.state,
                             onGo: () => {
                                 setState(ctx.data.cursor, stateStamp.state);
-
                                 b.invalidate();
                             },
                             onCopy: () => {
                                 ctx.stateJSON = JSON.stringify(stateStamp.state);
+                                ctx.setFocusForCopy = true;
+
                                 b.invalidate(ctx);
                             }
                         };
@@ -99,6 +115,8 @@ let createMonitor = b.createComponent<IData>({
                 })
             ]
         ];
+        ctx.setFocusForCopy = false;
+
     }
 });
 
@@ -107,19 +125,19 @@ export let init = (cursor: ICursor<any> = { key: '' }): (m, p) => void => {
     let routeUrl = '';
     let callback = (m, p) => {
         if (m && p && m.indexOf('Current state') >= 0) {
-            if(!routeUrl || routeUrl === window.location.href ){
-            if (!data.stateStamps.some(stateStamp => stateStamp.state === p))
-                data.stateStamps.push({ 
-                    change: 'change', 
-                    time: new Date(), 
-                    state: p,
-                    frames: b.frame() 
-                });
+            if (!routeUrl || routeUrl === window.location.href) {
+                if (!data.stateStamps.some(stateStamp => stateStamp.state === p))
+                    data.stateStamps.push({
+                        change: 'change',
+                        time: new Date(),
+                        state: p,
+                        frames: b.frame()
+                    });
             } else {
                 data.stateStamps = [];
             }
-            
-            routeUrl = window.location.href ;
+
+            routeUrl = window.location.href;
         }
     };
 

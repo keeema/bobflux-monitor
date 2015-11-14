@@ -1,5 +1,13 @@
 import * as b from 'node_modules/bobril/index';
 
+export let style = {
+	copyState: b.styleDef({
+		width: '150px',
+		height: '28px',
+		cssFloat: 'left'
+	})
+}  
+
 export interface IData {
     value?: string;
     onKeyDown?: (event: b.IKeyDownUpEvent) => void;

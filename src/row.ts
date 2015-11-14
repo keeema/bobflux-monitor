@@ -18,6 +18,8 @@ let active = b.styleDef({
     borderWidth: '3px',
 });
 
+let actionButtonsContainer = b.styleDef({});
+
 export interface IData {
     header: string;
     info: string;
@@ -44,8 +46,10 @@ export let create = b.createVirtualComponent<IData>({
             { tag: 'div', children: 'Order: ' + ctx.data.header },
             { tag: 'div', children: 'Time: ' + ctx.data.info },
             { tag: 'div', children: 'Frames: ' + ctx.data.frames },
-            button.create({ title: 'GO', style: button.style.actionButton, onClick: ctx.data.onGo }),
-            button.create({ title: 'COPY', style: button.style.actionButton, onClick: ctx.data.onCopy })
+            b.styledDiv([
+                button.create({ title: 'GO', style: button.style.actionButton, onClick: ctx.data.onGo, float: 'left', width: '50%' }),
+                button.create({ title: 'COPY', style: button.style.actionButton, onClick: ctx.data.onCopy })
+            ], actionButtonsContainer)       
         ];
     }
 })

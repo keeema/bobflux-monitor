@@ -18,12 +18,18 @@ define(["require", "exports", 'node_modules/bobril/index'], function (require, e
             color: '#fff',
             borderStyle: 'solid',
             borderWidth: '1px',
-            cursor: 'pointer'
-        }),
+            cursor: 'pointer',
+            padding: '5px',
+            height: '16px',
+        }, { hover: { backgroundColor: '#585858' } })
     };
     exports.create = b.createVirtualComponent({
         render: function (ctx, me) {
             me.children = b.styledDiv(ctx.data.title, ctx.data.style);
+            if (ctx.data.float)
+                b.style(me.children, { cssFloat: ctx.data.float });
+            if (ctx.data.width)
+                b.style(me.children, { width: ctx.data.width });
         },
         onClick: function (ctx) {
             if (ctx.data.onClick)

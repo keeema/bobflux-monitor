@@ -19,14 +19,18 @@ export let style = {
         color: '#fff',
         borderStyle: 'solid',
         borderWidth: '1px',
-        cursor: 'pointer'
-    }),
+        cursor: 'pointer',
+        padding: '5px',
+        height: '16px',
+    }, { hover: { backgroundColor: '#585858' } })
 };
 
 export interface IData {
     title: string;
     style?: b.IBobrilStyle;
     onClick: () => void;
+    float?: string;
+    width?: string;
 }
 
 interface ICtx extends b.IBobrilCtx {
@@ -36,6 +40,11 @@ interface ICtx extends b.IBobrilCtx {
 export let create = b.createVirtualComponent<IData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.children = b.styledDiv(ctx.data.title, ctx.data.style);
+
+        if (ctx.data.float)
+            b.style(me.children, { cssFloat: ctx.data.float })
+        if (ctx.data.width)
+            b.style(me.children, { width: ctx.data.width })
     },
     onClick(ctx: ICtx) {
         if (ctx.data.onClick)

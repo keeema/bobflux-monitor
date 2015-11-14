@@ -3,6 +3,7 @@ export interface IData {
     header: string;
     info: string;
     frames: number;
+    isActive: boolean;
     onGo: () => void;
     onCopy: () => void;
 }
