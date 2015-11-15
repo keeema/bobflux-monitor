@@ -39,8 +39,7 @@ interface ICtx extends b.IBobrilCtx {
 
 export let create = b.createVirtualComponent<IData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
-        me.children = b.styledDiv(ctx.data.title, ctx.data.style);
-        b.style(me, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
+        me.children = b.styledDiv(ctx.data.title, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
     },
     onClick(ctx: ICtx) {
         if (ctx.data.onClick)
