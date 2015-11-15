@@ -4,7 +4,6 @@ export let style = {
     copyState: b.styleDef({
         width: '150px',
         height: '28px',
-        cssFloat: 'left'
     })
 }
 
@@ -13,7 +12,8 @@ export interface IData {
     onKeyDown?: (event: b.IKeyDownUpEvent) => void;
     onChange?: (value: string) => void;
     style?: b.IBobrilStyle,
-    setFocus?: boolean
+    setFocus?: boolean,
+    float?: string
 }
 
 interface ICtx extends b.IBobrilCtx {
@@ -38,7 +38,7 @@ export let create = b.createComponent<IData>({
         me.tag = 'input';
         me.attrs = { type: 'text', value: ctx.value };
 
-        b.style(me, ctx.data.style);
+        b.style(me, ctx.data.style, { cssFloat: ctx.data.float });
     },
     postInitDom(ctx: ICtx, me: b.IBobrilCacheNode, element: HTMLElement) {
         focus(ctx, <HTMLInputElement>element);

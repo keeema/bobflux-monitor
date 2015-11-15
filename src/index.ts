@@ -71,6 +71,7 @@ let createMonitor = b.createComponent<IData>({
                         value: ctx.stateJSON,
                         setFocus: ctx.setFocusForCopy,
                         style: textbox.style.copyState,
+                        float: !!ctx.stateJSON ? 'left' : undefined,
                         onChange: (value: string) => {
                             ctx.stateJSON = value;
                             b.invalidate(ctx);
@@ -93,7 +94,7 @@ let createMonitor = b.createComponent<IData>({
                         },
                     })
                 ]),
-                rows.create({
+                b.styledDiv(rows.create({
                     rows: ctx.data.stateStamps.map((stateStamp, index) => {
                         return {
                             header: index.toString(),
@@ -112,7 +113,7 @@ let createMonitor = b.createComponent<IData>({
                             }
                         };
                     }).reverse()
-                })
+                }))
             ]
         ];
         ctx.setFocusForCopy = false;
