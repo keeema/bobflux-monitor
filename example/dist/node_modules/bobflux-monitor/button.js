@@ -26,10 +26,7 @@ define(["require", "exports", 'node_modules/bobril/index'], function (require, e
     exports.create = b.createVirtualComponent({
         render: function (ctx, me) {
             me.children = b.styledDiv(ctx.data.title, ctx.data.style);
-            if (ctx.data.float)
-                b.style(me.children, { cssFloat: ctx.data.float });
-            if (ctx.data.width)
-                b.style(me.children, { width: ctx.data.width });
+            b.style(me, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
         },
         onClick: function (ctx) {
             if (ctx.data.onClick)

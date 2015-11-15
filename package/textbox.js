@@ -20,8 +20,7 @@ define(["require", "exports", 'node_modules/bobril/index'], function (require, e
                 ctx.value = '';
             me.tag = 'input';
             me.attrs = { type: 'text', value: ctx.value };
-            if (ctx.data.style)
-                b.style(me, ctx.data.style);
+            b.style(me, ctx.data.style);
         },
         postInitDom: function (ctx, me, element) {
             focus(ctx, element);

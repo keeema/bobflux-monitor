@@ -1,12 +1,12 @@
 import * as b from 'node_modules/bobril/index';
 
 export let style = {
-	copyState: b.styleDef({
-		width: '150px',
-		height: '28px',
-		cssFloat: 'left'
-	})
-}  
+    copyState: b.styleDef({
+        width: '150px',
+        height: '28px',
+        cssFloat: 'left'
+    })
+}
 
 export interface IData {
     value?: string;
@@ -38,8 +38,7 @@ export let create = b.createComponent<IData>({
         me.tag = 'input';
         me.attrs = { type: 'text', value: ctx.value };
 
-        if (ctx.data.style)
-            b.style(me, ctx.data.style);
+        b.style(me, ctx.data.style);
     },
     postInitDom(ctx: ICtx, me: b.IBobrilCacheNode, element: HTMLElement) {
         focus(ctx, <HTMLInputElement>element);
