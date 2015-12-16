@@ -1,5 +1,5 @@
-import * as b from '../node_modules/bobril/index';
-import { getState } from '../node_modules/bobflux/dist/index';
+import * as b from 'bobril';
+import { getState } from 'bobflux';
 import { appCursor }  from './state';
 import { increment }  from './actions/increment';
 
@@ -7,7 +7,7 @@ let createCounter = b.createComponent({
     render(ctx, me: b.IBobrilNode) {
         let state = getState(appCursor);
         me.tag = 'div';
-        me.children = state.counter.toString()
+        me.children = state.counter.toString();
     }
 });
 

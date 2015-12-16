@@ -1,4 +1,4 @@
-import * as b from 'node_modules/bobril/index';
+import * as b from 'bobril';
 export declare let style: {
     copyState: string;
 };

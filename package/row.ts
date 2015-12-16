@@ -1,4 +1,4 @@
-import * as b from 'node_modules/bobril/index';
+import * as b from 'bobril';
 import * as button from './button';
 
 let rowStyle = b.styleDef({

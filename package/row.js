@@ -1,5 +1,5 @@
-define(["require", "exports", 'node_modules/bobril/index', './button'], function (require, exports, b, button) {
-    var rowStyle = b.styleDef({
+define(["require", "exports", 'bobril', './button'], function (require, exports, b, button) {
+    let rowStyle = b.styleDef({
         width: '200px',
         backgroundColor: '#ccc',
         borderBottomStyle: 'solid',
@@ -7,15 +7,15 @@ define(["require", "exports", 'node_modules/bobril/index', './button'], function
         padding: '0px',
         margin: '0px'
     });
-    var active = b.styleDef({
+    let active = b.styleDef({
         backgroundColor: '#999',
         borderColor: '#6699FF',
         borderStyle: 'solid',
         borderWidth: '3px',
     });
-    var actionButtonsContainer = b.styleDef({});
+    let actionButtonsContainer = b.styleDef({});
     exports.create = b.createVirtualComponent({
-        render: function (ctx, me) {
+        render(ctx, me) {
             me.tag = 'li';
             b.style(me, rowStyle);
             if (ctx.data.isActive) {

@@ -1,4 +1,4 @@
-define(["require", "exports", 'node_modules/bobril/index'], function (require, exports, b) {
+define(["require", "exports", 'bobril'], function (require, exports, b) {
     exports.style = {
         mainButtonOpen: b.styleDef({
             textAlign: 'center',
@@ -24,10 +24,10 @@ define(["require", "exports", 'node_modules/bobril/index'], function (require, e
         }, { hover: { backgroundColor: '#585858' } })
     };
     exports.create = b.createVirtualComponent({
-        render: function (ctx, me) {
+        render(ctx, me) {
             me.children = b.styledDiv(ctx.data.title, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
         },
-        onClick: function (ctx) {
+        onClick(ctx) {
             if (ctx.data.onClick)
                 ctx.data.onClick();
             return true;

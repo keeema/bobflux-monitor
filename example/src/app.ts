@@ -1,6 +1,6 @@
-import * as b from '../node_modules/bobril/index';
-import { bootstrap } from '../node_modules/bobflux/dist/index';
-import * as bobfluxMonitor from '../node_modules/bobflux-monitor/index';
+import * as b from 'bobril';
+import { bootstrap } from 'bobflux';
+import * as bobfluxMonitor from 'bobflux-monitor';
 import { page as mainPage } from './page';
 import { createDefaultState, appCursor} from './state';
 

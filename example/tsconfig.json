@@ -1,23 +1,18 @@
 {
-    "version": "1.6.0",
-    "compileOnSave": false,
     "compilerOptions": {
-        "target": "es6",
-        "module": "amd"
-    },
-    "formatCodeOptions": {
-        "indentSize": 4,
-        "tabSize": 4,
-        "newLineCharacter": "\r\n",
-        "convertTabsToSpaces": true,
-        "insertSpaceAfterCommaDelimiter": true,
-        "insertSpaceAfterSemicolonInForStatements": true,
-        "insertSpaceBeforeAndAfterBinaryOperators": true,
-        "insertSpaceAfterKeywordsInControlFlowStatements": true,
-        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-        "placeOpenBraceOnNewLineForFunctions": false,
-        "placeOpenBraceOnNewLineForControlBlocks": false
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
     },
     "filesGlob": [
         "./**/*.ts",
@@ -25,31 +20,8 @@
         "!./node_modules/typescript/**/*.*"
     ],
     "files": [
-        "./node_modules/bobflux-hotloader/button.ts",
-        "./node_modules/bobflux-hotloader/index.ts",
-        "./node_modules/bobflux-hotloader/row.ts",
-        "./node_modules/bobflux/dist/src/component.d.ts",
-        "./node_modules/bobflux/dist/src/component.ts",
-        "./node_modules/bobflux/dist/src/index.d.ts",
-        "./node_modules/bobflux/dist/src/index.ts",
-        "./node_modules/bobril/index.d.ts",
-        "./node_modules/bobril/index.ts",
-        "./node_modules/fun-model/dist/src/actionFactory.d.ts",
-        "./node_modules/fun-model/dist/src/actionFactory.ts",
-        "./node_modules/fun-model/dist/src/helpers.d.ts",
-        "./node_modules/fun-model/dist/src/helpers.ts",
-        "./node_modules/fun-model/dist/src/index.d.ts",
-        "./node_modules/fun-model/dist/src/index.ts",
-        "./node_modules/fun-model/dist/src/store.d.ts",
-        "./node_modules/fun-model/dist/src/store.ts",
-        "./node_modules/gulp-tslint/node_modules/tslint/lib/tslint.d.ts",
-        "./node_modules/gulp-tslint/node_modules/tslint/typings/node.d.ts",
-        "./node_modules/gulp-tslint/node_modules/tslint/typings/typescriptServices.d.ts",
-        "./src/actions/increment.ts",
-        "./src/app.ts",
-        "./src/components/button.ts",
-        "./src/components/textbox.ts",
-        "./src/page.ts",
-        "./src/state.ts"
-    ]
+        "src/app.ts",
+        "src/page.ts"
+    ],
+    "exclude": []
 }

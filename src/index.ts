@@ -1,5 +1,5 @@
-import * as b from 'node_modules/bobril/index';
-import { getState, setState, IState, ICursor } from 'node_modules/fun-model/dist/index';
+import * as b from 'bobril';
+import { getState, setState, IState, ICursor } from 'fun-model';
 import * as button from './button';
 import * as rows from './rows';
 import * as textbox from './textbox';

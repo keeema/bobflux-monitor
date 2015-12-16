@@ -1,5 +1,5 @@
-define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-model/dist/index', './button', './rows', './textbox'], function (require, exports, b, index_1, button, rows, textbox) {
-    var containerStyle = b.styleDef({
+define(["require", "exports", 'bobril', 'fun-model', './button', './rows', './textbox'], function (require, exports, b, fun_model_1, button, rows, textbox) {
+    let containerStyle = b.styleDef({
         position: 'absolute',
         top: '0px',
         right: '0px',
@@ -9,28 +9,28 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
         fontFamily: 'Lucida Console',
         zIndex: 1000
     });
-    var openedStyle = b.styleDef({
+    let openedStyle = b.styleDef({
         bottom: '0px'
     });
-    var createDefaultData = function (cursor) {
+    let createDefaultData = (cursor) => {
         return {
             isOpen: false,
             stateStamps: [],
-            cursor: cursor
+            cursor
         };
     };
-    var createMonitor = b.createComponent({
-        render: function (ctx, me) {
+    let createMonitor = b.createComponent({
+        render(ctx, me) {
             me.tag = 'div';
             b.style(me, containerStyle);
             if (ctx.data.isOpen)
                 b.style(me, openedStyle);
-            var state = index_1.getState(ctx.data.cursor);
+            let state = fun_model_1.getState(ctx.data.cursor);
             me.children = [
                 button.create({
                     title: ctx.data.isOpen ? 'HIDE >' : '<',
                     style: ctx.data.isOpen ? button.style.mainButtonOpen : button.style.mainButtonClose,
-                    onClick: function () {
+                    onClick: () => {
                         ctx.data.isOpen = !ctx.data.isOpen;
                         b.invalidate(ctx);
                     }
@@ -42,11 +42,11 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
                             setFocus: ctx.setFocusForCopy,
                             style: textbox.style.copyState,
                             float: !!ctx.stateJSON ? 'left' : undefined,
-                            onChange: function (value) {
+                            onChange: (value) => {
                                 ctx.stateJSON = value;
                                 b.invalidate(ctx);
                             },
-                            onKeyDown: function (event) {
+                            onKeyDown: (event) => {
                                 if (event.ctrl && event.which === 67) {
                                     ctx.stateJSON = '';
                                     b.invalidate();
@@ -56,26 +56,26 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
                         !!ctx.stateJSON && button.create({
                             title: 'GO',
                             style: button.style.actionButton,
-                            onClick: function () {
+                            onClick: () => {
                                 if (!ctx.stateJSON)
                                     return;
-                                index_1.setState(ctx.data.cursor, JSON.parse(ctx.stateJSON));
+                                fun_model_1.setState(ctx.data.cursor, JSON.parse(ctx.stateJSON));
                                 b.invalidate();
                             },
                         })
                     ]),
                     b.styledDiv(rows.create({
-                        rows: ctx.data.stateStamps.map(function (stateStamp, index) {
+                        rows: ctx.data.stateStamps.map((stateStamp, index) => {
                             return {
                                 header: index.toString(),
                                 info: stateStamp.time.toLocaleTimeString(),
                                 frames: stateStamp.frames,
                                 isActive: state === stateStamp.state,
-                                onGo: function () {
-                                    index_1.setState(ctx.data.cursor, stateStamp.state);
+                                onGo: () => {
+                                    fun_model_1.setState(ctx.data.cursor, stateStamp.state);
                                     b.invalidate();
                                 },
-                                onCopy: function () {
+                                onCopy: () => {
                                     ctx.stateJSON = JSON.stringify(stateStamp.state);
                                     ctx.setFocusForCopy = true;
                                     b.invalidate(ctx);
@@ -88,14 +88,13 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
             ctx.setFocusForCopy = false;
         }
     });
-    exports.init = function (cursor) {
-        if (cursor === void 0) { cursor = { key: '' }; }
-        var data = createDefaultData(cursor);
-        var routeUrl = '';
-        var callback = function (m, p) {
+    exports.init = (cursor = { key: '' }) => {
+        let data = createDefaultData(cursor);
+        let routeUrl = '';
+        let callback = (m, p) => {
             if (m && p && m.indexOf('Current state') >= 0) {
                 if (!routeUrl || routeUrl === window.location.href) {
-                    if (!data.stateStamps.some(function (stateStamp) { return stateStamp.state === p; }))
+                    if (!data.stateStamps.some(stateStamp => stateStamp.state === p))
                         data.stateStamps.push({
                             change: 'change',
                             time: new Date(),
@@ -109,7 +108,7 @@ define(["require", "exports", 'node_modules/bobril/index', 'node_modules/fun-mod
                 routeUrl = window.location.href;
             }
         };
-        b.addRoot(function () { return createMonitor(data); });
+        b.addRoot(() => createMonitor(data));
         return callback;
     };
 });

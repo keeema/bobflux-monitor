@@ -1,5 +1,5 @@
-define(["require", "exports", 'node_modules/bobril/index', './row'], function (require, exports, b, row) {
-    var rowsStyle = b.styleDef({
+define(["require", "exports", 'bobril', './row'], function (require, exports, b, row) {
+    let rowsStyle = b.styleDef({
         backgroundColor: '#ccc',
         borderBottomStyle: 'solid',
         borderBottomWidth: '1px',
@@ -7,9 +7,9 @@ define(["require", "exports", 'node_modules/bobril/index', './row'], function (r
         padding: '0px',
         margin: '0px'
     });
-    var rowsWrapperStyle = b.styleDef({});
+    let rowsWrapperStyle = b.styleDef({});
     exports.create = b.createComponent({
-        render: function (ctx, me) {
+        render(ctx, me) {
             me.tag = 'div';
             b.style(me, rowsWrapperStyle);
             me.children = b.style({

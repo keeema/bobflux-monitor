@@ -1,18 +1,18 @@
-define(["require", "exports", 'node_modules/bobril/index'], function (require, exports, b) {
+define(["require", "exports", 'bobril'], function (require, exports, b) {
     exports.style = {
         copyState: b.styleDef({
             width: '150px',
             height: '28px',
         })
     };
-    var focus = function (ctx, element) {
+    let focus = (ctx, element) => {
         if (ctx.data.setFocus) {
             element.focus();
             element.select();
         }
     };
     exports.create = b.createComponent({
-        render: function (ctx, me) {
+        render(ctx, me) {
             if (ctx.data.value !== undefined && ctx.data.value !== null)
                 ctx.value = ctx.data.value;
             else
@@ -21,18 +21,18 @@ define(["require", "exports", 'node_modules/bobril/index'], function (require, e
             me.attrs = { type: 'text', value: ctx.value };
             b.style(me, ctx.data.style, { cssFloat: ctx.data.float });
         },
-        postInitDom: function (ctx, me, element) {
+        postInitDom(ctx, me, element) {
             focus(ctx, element);
         },
-        postUpdateDom: function (ctx, me, element) {
+        postUpdateDom(ctx, me, element) {
             focus(ctx, element);
         },
-        onChange: function (ctx, value) {
+        onChange(ctx, value) {
             ctx.value = value;
             if (ctx.data.onChange)
                 ctx.data.onChange(value);
         },
-        onKeyDown: function (ctx, event) {
+        onKeyDown(ctx, event) {
             if (ctx.data.onKeyDown)
                 ctx.data.onKeyDown(event);
             return false;

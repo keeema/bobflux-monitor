@@ -1,2 +1,2 @@
-import { ICursor } from 'node_modules/fun-model/dist/index';
+import { ICursor } from 'fun-model';
 export declare let init: (cursor?: ICursor<any>) => (m: any, p: any) => void;
