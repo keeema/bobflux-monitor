@@ -7,8 +7,8 @@ Component for time travelling in bobflux application state history.
 Import package and provide initialized bobflux-monitor to bobflux bootstrap.
 
 ```typescript
-import { bootstrap } from 'node_modules/bobflux/dist/src/index';
-import * as bobfluxMonitor from 'node_modules/bobflux-monitor/index';
+import { bootstrap } from 'bobflux';
+import * as bobfluxMonitor from 'bobflux-monitor';
 
 bootstrap(createDefaultState(), bobfluxMonitor.init());
 ```
@@ -21,9 +21,11 @@ bootstrap(createDefaultState(), bobfluxMonitor.init());
 # Example
 Go to example folder and type:
 
+`npm i bobril-build -g`
+
 `npm i`
 
-`gulp watch`
+`bb`
 
 Go to [localhost](http:\\localhost:8000) .
 

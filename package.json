@@ -1,6 +1,6 @@
 {
   "name": "bobflux-monitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Component for time travelling in bobflux application state history.",
   "main": "./index.js",
   "typescript": {
@@ -23,7 +23,6 @@
   "bugs": {
     "url": "https://github.com/keeema/bobflux-monitor/issues"
   },
-  "main": "index.js",
   "keywords": [
     "bobflux",
     "bobril",

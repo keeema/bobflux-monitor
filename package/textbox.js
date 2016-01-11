@@ -2,7 +2,7 @@ define(["require", "exports", 'bobril'], function (require, exports, b) {
     exports.style = {
         copyState: b.styleDef({
             width: '150px',
-            height: '28px',
+            height: '28px'
         })
     };
     let focus = (ctx, element) => {
@@ -13,10 +13,12 @@ define(["require", "exports", 'bobril'], function (require, exports, b) {
     };
     exports.create = b.createComponent({
         render(ctx, me) {
-            if (ctx.data.value !== undefined && ctx.data.value !== null)
+            if (ctx.data.value !== undefined && ctx.data.value !== null) {
                 ctx.value = ctx.data.value;
-            else
+            }
+            else {
                 ctx.value = '';
+            }
             me.tag = 'input';
             me.attrs = { type: 'text', value: ctx.value };
             b.style(me, ctx.data.style, { cssFloat: ctx.data.float });

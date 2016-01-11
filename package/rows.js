@@ -14,8 +14,8 @@ define(["require", "exports", 'bobril', './row'], function (require, exports, b,
             b.style(me, rowsWrapperStyle);
             me.children = b.style({
                 tag: 'ul',
-                children: !!ctx.data.rows && ctx.data.rows.map(row.create)
+                children: !!ctx.data.rows && ctx.data.rows.map(rd => row.create(rd))
             }, rowsStyle);
-        },
+        }
     });
 });

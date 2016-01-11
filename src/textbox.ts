@@ -3,17 +3,17 @@ import * as b from 'bobril';
 export let style = {
     copyState: b.styleDef({
         width: '150px',
-        height: '28px',
+        height: '28px'
     })
-}
+};
 
 export interface IData {
     value?: string;
     onKeyDown?: (event: b.IKeyDownUpEvent) => void;
     onChange?: (value: string) => void;
-    style?: b.IBobrilStyle,
-    setFocus?: boolean,
-    float?: string
+    style?: b.IBobrilStyle;
+    setFocus?: boolean;
+    float?: string;
 }
 
 interface ICtx extends b.IBobrilCtx {
@@ -26,14 +26,15 @@ let focus = (ctx: ICtx, element: HTMLInputElement) => {
         element.focus();
         (<HTMLInputElement>element).select();
     }
-}
+};
 
 export let create = b.createComponent<IData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
-        if (ctx.data.value !== undefined && ctx.data.value !== null)
+        if (ctx.data.value !== undefined && ctx.data.value !== null) {
             ctx.value = ctx.data.value;
-        else
+        } else {
             ctx.value = '';
+        }
 
         me.tag = 'input';
         me.attrs = { type: 'text', value: ctx.value };

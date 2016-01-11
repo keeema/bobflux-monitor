@@ -11,7 +11,7 @@ define(["require", "exports", 'bobril', './button'], function (require, exports,
         backgroundColor: '#999',
         borderColor: '#6699FF',
         borderStyle: 'solid',
-        borderWidth: '3px',
+        borderWidth: '3px'
     });
     let actionButtonsContainer = b.styleDef({});
     exports.create = b.createVirtualComponent({
