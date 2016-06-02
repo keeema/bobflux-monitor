@@ -1,5 +1,6 @@
 import * as b from 'bobril';
 import * as f from 'bobflux';
+import * as stringHelpers from './helpers/string';
 import button, { buttonStyles } from './components/button';
 import textbox, { textboxStyles } from './components/textbox';
 import rows from './components/rows';
@@ -32,7 +33,7 @@ interface IData {
 }
 
 interface ICtx extends f.IDataComponentContext<f.IState, IData> {
-    stateJSON?: string;
+    stateText?: string;
     setFocusForCopy: boolean;
 }
 
@@ -63,28 +64,28 @@ const monitorGenericFactory = f.createDataComponent<f.IState, IData>({
             !!ctx.data.isOpen && [
                 b.styledDiv([
                     textbox({
-                        value: ctx.stateJSON,
+                        value: ctx.stateText,
                         setFocus: ctx.setFocusForCopy,
                         style: textboxStyles.copyState,
-                        float: !!ctx.stateJSON ? 'left' : undefined,
+                        float: !!ctx.stateText ? 'left' : undefined,
                         onChange: (value: string) => {
-                            ctx.stateJSON = value;
+                            ctx.stateText = value;
                             b.invalidate(ctx);
                         },
                         onKeyDown: (event: b.IKeyDownUpEvent) => {
                             if (event.ctrl && event.which === 67) {
-                                ctx.stateJSON = '';
+                                ctx.stateText = '';
                                 b.invalidate();
                             }
                         }
                     }),
-                    !!ctx.stateJSON && button({
+                    !!ctx.stateText && button({
                         title: 'GO',
                         style: buttonStyles.actionButton,
                         onClick: () => {
-                            if (!ctx.stateJSON)
+                            if (!ctx.stateText)
                                 return;
-                            f.setState(ctx.cursor, JSON.parse(ctx.stateJSON));
+                            f.setState(ctx.cursor, eval(`var bobfluxMonitorEval = ${ctx.stateText}; bobfluxMonitorEval;`));
                             b.invalidate();
                         }
                     })
@@ -101,7 +102,7 @@ const monitorGenericFactory = f.createDataComponent<f.IState, IData>({
                                 b.invalidate();
                             },
                             onCopy: () => {
-                                ctx.stateJSON = JSON.stringify(stateStamp.state);
+                                ctx.stateText = stringHelpers.allToString(stateStamp.state);
                                 ctx.setFocusForCopy = true;
 
                                 b.invalidate(ctx);
