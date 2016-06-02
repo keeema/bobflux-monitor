@@ -31,9 +31,6 @@
   ],
   "dependencies": {
     "bobril": "^4.*.*",
-    "fun-model": "1.*.*"
-  },
-  "devDependencies": {
     "bobflux": "4.*.*"
   }
 }

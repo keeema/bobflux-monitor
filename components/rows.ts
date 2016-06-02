@@ -1,7 +1,7 @@
 import * as b from 'bobril';
-import * as row from './row';
+import row, { IRowData } from './row';
 
-let rowsStyle = b.styleDef({
+const rowsStyle = b.styleDef({
     backgroundColor: '#ccc',
     borderBottomStyle: 'solid',
     borderBottomWidth: '1px',
@@ -10,26 +10,27 @@ let rowsStyle = b.styleDef({
     margin: '0px'
 });
 
-let rowsWrapperStyle = b.styleDef({
-});
+const rowsWrapperStyle = b.styleDef({});
 
-export interface IData {
-    rows: row.IData[];
+export interface IRowsData {
+    rows: IRowData[];
 }
 
 interface ICtx extends b.IBobrilCtx {
-    data: IData;
+    data: IRowsData;
 }
 
-export let create = b.createComponent<IData>({
+export const rows = b.createComponent<IRowsData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.tag = 'div';
         b.style(me, rowsWrapperStyle);
         me.children = b.style(
             {
                 tag: 'ul',
-                children: !!ctx.data.rows && ctx.data.rows.map(rd => row.create(rd))
+                children: !!ctx.data.rows && ctx.data.rows.map(rd => row(rd))
             },
             rowsStyle);
     }
 });
+
+export default rows;

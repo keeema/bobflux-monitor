@@ -1,7 +1,7 @@
 import * as b from 'bobril';
-import * as button from './button';
+import button, { buttonStyles } from './button';
 
-let rowStyle = b.styleDef({
+const rowStyle = b.styleDef({
     width: '200px',
     backgroundColor: '#ccc',
     borderBottomStyle: 'solid',
@@ -11,16 +11,16 @@ let rowStyle = b.styleDef({
 
 });
 
-let active = b.styleDef({
+const active = b.styleDef({
     backgroundColor: '#999',
     borderColor: '#6699FF',
     borderStyle: 'solid',
     borderWidth: '3px'
 });
 
-let actionButtonsContainer = b.styleDef({});
+const actionButtonsContainer = b.styleDef({});
 
-export interface IData {
+export interface IRowData {
     header: string;
     info: string;
     frames: number;
@@ -30,10 +30,10 @@ export interface IData {
 }
 
 interface ICtx extends b.IBobrilCtx {
-    data: IData;
+    data: IRowData;
 }
 
-export let create = b.createVirtualComponent<IData>({
+export const row = b.createVirtualComponent<IRowData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.tag = 'li';
 
@@ -48,10 +48,12 @@ export let create = b.createVirtualComponent<IData>({
             { tag: 'div', children: 'Frames: ' + ctx.data.frames },
             b.styledDiv(
                 [
-                    button.create({ title: 'GO', style: button.style.actionButton, onClick: ctx.data.onGo, float: 'left', width: '50%' }),
-                    button.create({ title: 'COPY', style: button.style.actionButton, onClick: ctx.data.onCopy })
+                    button({ title: 'GO', style: buttonStyles.actionButton, onClick: ctx.data.onGo, float: 'left', width: '50%' }),
+                    button({ title: 'COPY', style: buttonStyles.actionButton, onClick: ctx.data.onCopy })
                 ],
                 actionButtonsContainer)
         ];
     }
 });
+
+export default row;

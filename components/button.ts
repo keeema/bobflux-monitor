@@ -1,6 +1,6 @@
 import * as b from 'bobril';
 
-export let style = {
+export const buttonStyles = {
     mainButtonOpen: b.styleDef({
         textAlign: 'center',
         height: '20px',
@@ -13,16 +13,18 @@ export let style = {
         width: '30px',
         backgroundColor: '#ccc'
     }),
-    actionButton: b.styleDef({
-        textAlign: 'center',
-        backgroundColor: '#181818',
-        color: '#fff',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        cursor: 'pointer',
-        padding: '5px',
-        height: '16px',
-    }, { hover: { backgroundColor: '#585858' } })
+    actionButton: b.styleDef(
+        {
+            textAlign: 'center',
+            backgroundColor: '#181818',
+            color: '#fff',
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            cursor: 'pointer',
+            padding: '5px',
+            height: '16px'
+        },
+        { hover: { backgroundColor: '#585858' } })
 };
 
 export interface IData {
@@ -34,10 +36,10 @@ export interface IData {
 }
 
 interface ICtx extends b.IBobrilCtx {
-    data: IData
+    data: IData;
 }
 
-export let create = b.createVirtualComponent<IData>({
+export const button = b.createVirtualComponent<IData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.children = b.styledDiv(ctx.data.title, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
     },
@@ -46,4 +48,6 @@ export let create = b.createVirtualComponent<IData>({
             ctx.data.onClick();
         return true;
     }
-})
+});
+
+export default button;

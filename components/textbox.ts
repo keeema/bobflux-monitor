@@ -1,13 +1,13 @@
 import * as b from 'bobril';
 
-export let style = {
+export const textboxStyles = {
     copyState: b.styleDef({
         width: '150px',
         height: '28px'
     })
 };
 
-export interface IData {
+export interface ITextboxData {
     value?: string;
     onKeyDown?: (event: b.IKeyDownUpEvent) => void;
     onChange?: (value: string) => void;
@@ -17,18 +17,18 @@ export interface IData {
 }
 
 interface ICtx extends b.IBobrilCtx {
-    data: IData;
+    data: ITextboxData;
     value: string;
 }
 
-let focus = (ctx: ICtx, element: HTMLInputElement) => {
+function focus(ctx: ICtx, element: HTMLInputElement) {
     if (ctx.data.setFocus) {
         element.focus();
         (<HTMLInputElement>element).select();
     }
 };
 
-export let create = b.createComponent<IData>({
+export const textbox = b.createComponent<ITextboxData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
         if (ctx.data.value !== undefined && ctx.data.value !== null) {
             ctx.value = ctx.data.value;
@@ -58,3 +58,5 @@ export let create = b.createComponent<IData>({
         return false;
     }
 });
+
+export default textbox;

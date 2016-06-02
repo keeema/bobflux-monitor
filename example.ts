@@ -1,10 +1,11 @@
 import * as b from 'bobril';
+import * as monitor from './index';
 import { bootstrap } from 'bobflux';
-import * as bobfluxMonitor from './index';
-import { page as mainPage } from './example/page';
-import { createDefaultState, appCursor} from './example/state';
+import { createDefaultState} from './example/state';
+import mainPage from './example/mainPage';
 
-bootstrap(createDefaultState(), bobfluxMonitor.init());
+bootstrap(createDefaultState(), monitor.init());
+
 b.routes(
     b.route({handler: mainPage }, [
          b.route({handler: mainPage })
