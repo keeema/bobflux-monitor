@@ -1,11 +1,9 @@
 {
   "name": "bobflux-monitor",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Component for time travelling in bobflux application state history.",
-  "main": "./index.js",
   "typescript": {
-    "main": "./index.ts",
-    "definition": "./index.d.ts"
+    "main": "index.ts"
   },
   "author": {
     "name": "keeema"
@@ -33,15 +31,9 @@
   ],
   "dependencies": {
     "bobril": "^4.*.*",
-    "fun-model": "^1.0.0"
+    "fun-model": "1.*.*"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-clean": "^0.3.1",
-    "gulp-flatten": "^0.1.1",
-    "gulp-typescript": "^2.8.0",
-    "gulp-watch": "^4.3.4",
-    "merge2": "^0.3.6",
-    "run-sequence": "^1.1.2"
+    "bobflux": "4.*.*"
   }
 }

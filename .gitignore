@@ -1,11 +1,4 @@
 /**/*.js
 /node_modules
-/example/node_modules
+/dist
 /uploads
-/.vscode
-/example/.vscode
-
-!/package/*.*
-!/example/dist/**/*.js
-!/example/*.js
-!/*.*
