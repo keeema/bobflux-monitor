@@ -10,7 +10,7 @@ const buttonStyles = {
     [ButtonType.Open]: b.styleDef({
         textAlign: 'center',
         height: 24,
-        width: 194,
+        width: 214,
         backgroundColor: '#ccc'
     }),
     [ButtonType.Close]: b.styleDef({

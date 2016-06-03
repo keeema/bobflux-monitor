@@ -14,15 +14,17 @@ const containerStyle = b.styleDef({
     zIndex: 1000
 });
 
+const openedContainerStyle = b.styleDef({ bottom: 0 });
+
+const notScrollingStyle = b.styleDef({ overflow: 'auto', overflowX: 'hidden' });
+
 const scrollingStyle = b.styleDef({
     overflow: 'scroll',
     overflowX: 'hidden',
-     bottom: 0
-});
-
-const notScrollingStyle = b.styleDef({
-    overflow: 'auto',
-    overflowX: 'hidden'
+    position: 'absolute',
+    top: 62,
+    right: 0,
+    bottom: 0
 });
 
 interface IStateStamp {
@@ -50,10 +52,8 @@ const copyContainer = b.styleDef({
 export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
     return b.createComponent({
         render(ctx: ICtx, me: b.IBobrilNode) {
-            me.tag = 'div';
             b.style(me, containerStyle);
-            b.style(me, ctx.data.isOpen ? scrollingStyle : notScrollingStyle);
-
+            b.style(me, ctx.data.isOpen && openedContainerStyle);
             const state = f.getState(cursor);
 
             me.children = [
@@ -101,25 +101,27 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                                 'go-copy')
                         ],
                         copyContainer),
-                    b.styledDiv(rows({
-                        rows: ctx.data.stateStamps.map((stateStamp, index) => {
-                            return {
-                                header: index.toString(),
-                                info: stateStamp.time.toLocaleTimeString(),
-                                frames: stateStamp.frames,
-                                isActive: state === stateStamp.state,
-                                onGo: () => {
-                                    f.setState(cursor, stateStamp.state);
-                                    b.invalidate();
-                                },
-                                onCopy: () => {
-                                    ctx.stateText = stringHelpers.allToString(stateStamp.state);
-                                    ctx.setFocusForCopy = true;
-                                    b.invalidate(ctx);
-                                }
-                            };
-                        }).reverse()
-                    }))
+                    b.styledDiv(
+                        rows({
+                            rows: ctx.data.stateStamps.map((stateStamp, index) => {
+                                return {
+                                    header: index.toString(),
+                                    info: stateStamp.time.toLocaleTimeString(),
+                                    frames: stateStamp.frames,
+                                    isActive: state === stateStamp.state,
+                                    onGo: () => {
+                                        f.setState(cursor, stateStamp.state);
+                                        b.invalidate();
+                                    },
+                                    onCopy: () => {
+                                        ctx.stateText = stringHelpers.allToString(stateStamp.state);
+                                        ctx.setFocusForCopy = true;
+                                        b.invalidate(ctx);
+                                    }
+                                };
+                            }).reverse()
+                        }),
+                        ctx.data.isOpen ? scrollingStyle : notScrollingStyle)
                 ]
             ];
             ctx.setFocusForCopy = false;
