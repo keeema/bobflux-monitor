@@ -8,26 +8,25 @@ Import package and provide initialized bobflux-monitor to bobflux bootstrap.
 
 ```typescript
 import { bootstrap } from 'bobflux';
-import * as bobfluxMonitor from 'bobflux-monitor';
+import monitor from 'bobflux-monitor';
 
-bootstrap(createDefaultState(), bobfluxMonitor.init());
+bootstrap(createDefaultState(), monitor());
+```
+```typescript
+import { bootstrap } from 'fun-model';
+import monitor from 'bobflux-monitor';
+
+bootstrap(createDefaultState(), b.invalidate,  monitor());
 ```
 
 # Development
-`npm i`
-
-`gulp dwp`
-
-# Example
-Go to example folder and type:
-
 `npm i bobril-build -g`
 
 `npm i`
 
 `bb`
 
-Go to [localhost](http:\\localhost:8000) .
+Go to [localhost](http:\\localhost:8080) to see an example.
 
 Library used by [GMC Software Technology](http://www.gmchk.cz).
 

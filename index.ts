@@ -89,6 +89,7 @@ function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState
                                 }
                             }),
                             b.withKey(
+
                                 button({
                                     title: 'GO',
                                     isDisabled: !ctx.stateText,
@@ -155,3 +156,5 @@ export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key:
     b.addRoot(() => createMonitor(data));
     return callback;
 }
+
+export default init;
