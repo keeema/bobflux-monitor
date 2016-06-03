@@ -10,7 +10,7 @@ const buttonStyles = {
     [ButtonType.Open]: b.styleDef({
         textAlign: 'center',
         height: '24px',
-        width: '200px',
+        width: '194px',
         backgroundColor: '#ccc'
     }),
     [ButtonType.Close]: b.styleDef({
@@ -57,7 +57,6 @@ export const button = b.createComponent<IData>({
         me.style = { cssFloat: ctx.data.float, width: ctx.data.width };
         const type = ctx.data.type === undefined ? ButtonType.Action : ctx.data.type;
 
-
         b.style(me, buttonStyles[type]);
         me.children = ctx.data.title;
         me.attrs = {};
@@ -66,7 +65,6 @@ export const button = b.createComponent<IData>({
         } else if (type === ButtonType.Action) {
             b.style(me, hoverActionStyle);
         }
-
     },
     onClick(ctx: ICtx) {
         if (ctx.data.onClick && !ctx.data.isDisabled)
