@@ -4,13 +4,15 @@ export interface IAppState {
     counter: number;
     date: Date;
     popup: () => void;
+    history: number[];
 }
-// TODO pridate jeste pole vsech inkrementaci pro otestovani pole
+
 export const createDefaultState = (): IAppState => {
     return {
         counter: 0,
         date: new Date(Date.now()),
-        popup: () => alert('Current value is 0.')
+        popup: () => alert('Current value is 0.'),
+        history: []
     };
 };
 
