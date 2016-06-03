@@ -2,24 +2,24 @@ import * as b from 'bobril';
 import button from './button';
 
 const rowStyle = b.styleDef({
-    width: '194px',
+    width: 194,
     backgroundColor: '#ccc',
     borderBottomStyle: 'solid',
-    borderBottomWidth: '2px'
+    borderBottomWidth: 2
 });
 
 const active = b.styleDef({
     backgroundColor: '#999',
     borderColor: '#6699FF',
     borderStyle: 'solid',
-    borderWidth: '3px'
+    borderWidth: 3
 });
 
 const inActive = b.styleDef({
     borderColor: '#ccc',
-    borderWidth: '2px',
+    borderWidth: 2,
     borderBottomColor: '#000',
-    padding: '3px'
+    padding: 3
 });
 
 const actionButtonsContainer = b.styleDef({});

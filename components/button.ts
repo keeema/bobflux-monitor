@@ -9,14 +9,14 @@ export const enum ButtonType {
 const buttonStyles = {
     [ButtonType.Open]: b.styleDef({
         textAlign: 'center',
-        height: '24px',
-        width: '194px',
+        height: 24,
+        width: 194,
         backgroundColor: '#ccc'
     }),
     [ButtonType.Close]: b.styleDef({
         textAlign: 'center',
-        height: '24px',
-        width: '30px',
+        height: 24,
+        width: 30,
         backgroundColor: '#ccc'
     }),
     [ButtonType.Action]: b.styleDef({
@@ -24,10 +24,10 @@ const buttonStyles = {
         backgroundColor: '#181818',
         color: '#fff',
         borderStyle: 'solid',
-        borderWidth: '1px',
+        borderWidth: 1,
         cursor: 'pointer',
-        padding: '2px',
-        height: '24px'
+        padding: 2,
+        height: 24
     })
 };
 

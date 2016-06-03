@@ -7,8 +7,8 @@ import rows from './rows';
 
 const containerStyle = b.styleDef({
     position: 'absolute',
-    top: '0px',
-    right: '0px',
+    top: 0,
+    right: 0,
     backgroundColor: '#ddd',
     fontFamily: 'Open sans, Sans-serif',
     zIndex: 1000
@@ -16,16 +16,13 @@ const containerStyle = b.styleDef({
 
 const scrollingStyle = b.styleDef({
     overflow: 'scroll',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+     bottom: 0
 });
 
 const notScrollingStyle = b.styleDef({
     overflow: 'auto',
     overflowX: 'hidden'
-});
-
-const openedStyle = b.styleDef({
-    bottom: '0px'
 });
 
 interface IStateStamp {
@@ -47,7 +44,7 @@ interface ICtx extends b.IBobrilCtx {
 }
 
 const copyContainer = b.styleDef({
-    padding: '3px'
+    padding: 3
 });
 
 export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
@@ -56,9 +53,6 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
             me.tag = 'div';
             b.style(me, containerStyle);
             b.style(me, ctx.data.isOpen ? scrollingStyle : notScrollingStyle);
-
-            if (ctx.data.isOpen)
-                b.style(me, openedStyle);
 
             const state = f.getState(cursor);
 

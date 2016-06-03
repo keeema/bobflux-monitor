@@ -2,8 +2,8 @@ import * as b from 'bobril';
 
 export const textboxStyles = {
     copyState: b.styleDef({
-        width: '150px',
-        height: '24px'
+        width: 150,
+        height: 24
     })
 };
 
