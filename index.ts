@@ -85,7 +85,8 @@ const monitorGenericFactory = f.createDataComponent<f.IState, IData>({
                         onClick: () => {
                             if (!ctx.stateText)
                                 return;
-                            f.setState(ctx.cursor, eval(`var bobfluxMonitorEval = ${ctx.stateText}; bobfluxMonitorEval;`));
+
+                            f.setState(ctx.cursor, new Function(`return ${ctx.stateText};`)());
                             b.invalidate();
                         }
                     })
