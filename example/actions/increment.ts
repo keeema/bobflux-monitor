@@ -1,4 +1,4 @@
-import * as f from 'bobflux';
+import * as f from 'fun-model';
 import appCursor from '../state';
 
 export const increment = f.createAction(appCursor, state => f.shallowCopy(state, copy => {

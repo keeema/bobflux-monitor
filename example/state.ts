@@ -1,4 +1,4 @@
-import * as f from 'bobflux';
+import * as f from 'fun-model';
 
 export interface IAppState {
     counter: number;

@@ -1,10 +1,14 @@
 import * as b from 'bobril';
 import * as monitor from './index';
-import { bootstrap } from 'bobflux';
+import { bootstrap } from 'fun-model';
 import { createDefaultState} from './example/state';
 import mainPage from './example/mainPage';
 
-bootstrap(createDefaultState(), monitor.init());
+// Bobflux
+// bootstrap(createDefaultState(), monitor.init());
+
+// fun-model
+bootstrap(createDefaultState(), b.invalidate,  monitor.init());
 
 b.routes(
     b.route({handler: mainPage }, [

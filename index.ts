@@ -1,5 +1,5 @@
 import * as b from 'bobril';
-import * as f from 'bobflux';
+import * as f from 'fun-model';
 import * as stringHelpers from './helpers/string';
 import button, { buttonStyles } from './components/button';
 import textbox, { textboxStyles } from './components/textbox';
@@ -32,7 +32,8 @@ interface IData {
     stateStamps: IStateStamp[];
 }
 
-interface ICtx extends f.IDataComponentContext<f.IState, IData> {
+interface ICtx extends b.IBobrilCtx {
+    data: IData;
     stateText?: string;
     setFocusForCopy: boolean;
 }
@@ -44,79 +45,82 @@ function createDefaultData(): IData {
     };
 }
 
-const monitorGenericFactory = f.createDataComponent<f.IState, IData>({
-    render(ctx: ICtx, me: b.IBobrilNode) {
-        me.tag = 'div';
-        b.style(me, containerStyle);
+function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
+    return b.createComponent({
+        render(ctx: ICtx, me: b.IBobrilNode) {
+            me.tag = 'div';
+            b.style(me, containerStyle);
 
-        if (ctx.data.isOpen)
-            b.style(me, openedStyle);
+            if (ctx.data.isOpen)
+                b.style(me, openedStyle);
 
-        me.children = [
-            button({
-                title: ctx.data.isOpen ? 'HIDE >' : '<',
-                style: ctx.data.isOpen ? buttonStyles.mainButtonOpen : buttonStyles.mainButtonClose,
-                onClick: () => {
-                    ctx.data.isOpen = !ctx.data.isOpen;
-                    b.invalidate(ctx);
-                }
-            }),
-            !!ctx.data.isOpen && [
-                b.styledDiv([
-                    textbox({
-                        value: ctx.stateText,
-                        setFocus: ctx.setFocusForCopy,
-                        style: textboxStyles.copyState,
-                        float: !!ctx.stateText ? 'left' : undefined,
-                        onChange: (value: string) => {
-                            ctx.stateText = value;
-                            b.invalidate(ctx);
-                        },
-                        onKeyDown: (event: b.IKeyDownUpEvent) => {
-                            if (event.ctrl && event.which === 67) {
-                                ctx.stateText = '';
-                                b.invalidate();
-                            }
-                        }
-                    }),
-                    !!ctx.stateText && button({
-                        title: 'GO',
-                        style: buttonStyles.actionButton,
-                        onClick: () => {
-                            if (!ctx.stateText)
-                                return;
+            const state = f.getState(cursor);
 
-                            f.setState(ctx.cursor, new Function(`return ${ctx.stateText};`)());
-                            b.invalidate();
-                        }
-                    })
-                ]),
-                b.styledDiv(rows({
-                    rows: ctx.data.stateStamps.map((stateStamp, index) => {
-                        return {
-                            header: index.toString(),
-                            info: stateStamp.time.toLocaleTimeString(),
-                            frames: stateStamp.frames,
-                            isActive: ctx.state === stateStamp.state,
-                            onGo: () => {
-                                f.setState(ctx.cursor, stateStamp.state);
-                                b.invalidate();
-                            },
-                            onCopy: () => {
-                                ctx.stateText = stringHelpers.allToString(stateStamp.state);
-                                ctx.setFocusForCopy = true;
-
+            me.children = [
+                button({
+                    title: ctx.data.isOpen ? 'HIDE >' : '<',
+                    style: ctx.data.isOpen ? buttonStyles.mainButtonOpen : buttonStyles.mainButtonClose,
+                    onClick: () => {
+                        ctx.data.isOpen = !ctx.data.isOpen;
+                        b.invalidate(ctx);
+                    }
+                }),
+                !!ctx.data.isOpen && [
+                    b.styledDiv([
+                        textbox({
+                            value: ctx.stateText,
+                            setFocus: ctx.setFocusForCopy,
+                            style: textboxStyles.copyState,
+                            float: !!ctx.stateText ? 'left' : undefined,
+                            onChange: (value: string) => {
+                                ctx.stateText = value;
                                 b.invalidate(ctx);
+                            },
+                            onKeyDown: (event: b.IKeyDownUpEvent) => {
+                                if (event.ctrl && event.which === 67) {
+                                    ctx.stateText = '';
+                                    b.invalidate();
+                                }
                             }
-                        };
-                    }).reverse()
-                }))
-            ]
-        ];
-        ctx.setFocusForCopy = false;
+                        }),
+                        !!ctx.stateText && button({
+                            title: 'GO',
+                            style: buttonStyles.actionButton,
+                            onClick: () => {
+                                if (!ctx.stateText)
+                                    return;
 
-    }
-});
+                                f.setState(cursor, new Function(`return ${ctx.stateText};`)());
+                                b.invalidate();
+                            }
+                        })
+                    ]),
+                    b.styledDiv(rows({
+                        rows: ctx.data.stateStamps.map((stateStamp, index) => {
+                            return {
+                                header: index.toString(),
+                                info: stateStamp.time.toLocaleTimeString(),
+                                frames: stateStamp.frames,
+                                isActive: state === stateStamp.state,
+                                onGo: () => {
+                                    f.setState(cursor, stateStamp.state);
+                                    b.invalidate();
+                                },
+                                onCopy: () => {
+                                    ctx.stateText = stringHelpers.allToString(stateStamp.state);
+                                    ctx.setFocusForCopy = true;
+                                    b.invalidate(ctx);
+                                }
+                            };
+                        }).reverse()
+                    }))
+                ]
+            ];
+            ctx.setFocusForCopy = false;
+
+        }
+    });
+};
 
 export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key: '' }): (m, p) => void {
     const createMonitor = monitorGenericFactory(cursor);
