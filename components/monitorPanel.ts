@@ -10,9 +10,18 @@ const containerStyle = b.styleDef({
     top: '0px',
     right: '0px',
     backgroundColor: '#ddd',
-    overflow: 'visible',
     fontFamily: 'Open sans, Sans-serif',
     zIndex: 1000
+});
+
+const scrollingStyle = b.styleDef({
+    overflow: 'scroll',
+    overflowX: 'hidden'
+});
+
+const notScrollingStyle = b.styleDef({
+    overflow: 'auto',
+    overflowX: 'hidden'
 });
 
 const openedStyle = b.styleDef({
@@ -46,6 +55,7 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
         render(ctx: ICtx, me: b.IBobrilNode) {
             me.tag = 'div';
             b.style(me, containerStyle);
+            b.style(me, ctx.data.isOpen ? scrollingStyle : notScrollingStyle);
 
             if (ctx.data.isOpen)
                 b.style(me, openedStyle);

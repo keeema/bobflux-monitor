@@ -12,7 +12,7 @@ export const createDefaultState = (): IAppState => {
         counter: 0,
         date: new Date(Date.now()),
         popup: () => alert('Current value is 0.'),
-        history: []
+        history: [0]
     };
 };
 
