@@ -3,7 +3,7 @@ import * as b from 'bobril';
 export const textboxStyles = {
     copyState: b.styleDef({
         width: '150px',
-        height: '28px'
+        height: '24px'
     })
 };
 
@@ -14,6 +14,7 @@ export interface ITextboxData {
     style?: b.IBobrilStyle;
     setFocus?: boolean;
     float?: string;
+    placeholder?: string;
 }
 
 interface ICtx extends b.IBobrilCtx {
@@ -37,7 +38,7 @@ export const textbox = b.createComponent<ITextboxData>({
         }
 
         me.tag = 'input';
-        me.attrs = { type: 'text', value: ctx.value };
+        me.attrs = { type: 'text', value: ctx.value, placeholder: ctx.data.placeholder };
 
         b.style(me, ctx.data.style, { cssFloat: ctx.data.float });
     },

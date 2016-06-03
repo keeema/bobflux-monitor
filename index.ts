@@ -1,7 +1,7 @@
 import * as b from 'bobril';
 import * as f from 'fun-model';
 import * as stringHelpers from './helpers/string';
-import button, { buttonStyles } from './components/button';
+import button, { ButtonType } from './components/button';
 import textbox, { textboxStyles } from './components/textbox';
 import rows from './components/rows';
 
@@ -10,9 +10,8 @@ const containerStyle = b.styleDef({
     top: '0px',
     right: '0px',
     backgroundColor: '#ddd',
-    overflow: 'auto',
-    overflowX: 'hidden',
-    fontFamily: 'Lucida Console',
+    overflow: 'visible',
+    fontFamily: 'Open sans, Sans-serif',
     zIndex: 1000
 });
 
@@ -45,6 +44,10 @@ function createDefaultData(): IData {
     };
 }
 
+const copyContainer = b.styleDef({
+    padding: '3px'
+});
+
 function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
     return b.createComponent({
         render(ctx: ICtx, me: b.IBobrilNode) {
@@ -59,42 +62,47 @@ function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState
             me.children = [
                 button({
                     title: ctx.data.isOpen ? 'HIDE >' : '<',
-                    style: ctx.data.isOpen ? buttonStyles.mainButtonOpen : buttonStyles.mainButtonClose,
+                    type: ctx.data.isOpen ? ButtonType.Open : ButtonType.Close,
                     onClick: () => {
                         ctx.data.isOpen = !ctx.data.isOpen;
                         b.invalidate(ctx);
                     }
                 }),
                 !!ctx.data.isOpen && [
-                    b.styledDiv([
-                        textbox({
-                            value: ctx.stateText,
-                            setFocus: ctx.setFocusForCopy,
-                            style: textboxStyles.copyState,
-                            float: !!ctx.stateText ? 'left' : undefined,
-                            onChange: (value: string) => {
-                                ctx.stateText = value;
-                                b.invalidate(ctx);
-                            },
-                            onKeyDown: (event: b.IKeyDownUpEvent) => {
-                                if (event.ctrl && event.which === 67) {
-                                    ctx.stateText = '';
-                                    b.invalidate();
+                    b.styledDiv(
+                        [
+                            textbox({
+                                value: ctx.stateText,
+                                setFocus: ctx.setFocusForCopy,
+                                style: textboxStyles.copyState,
+                                float: 'left',
+                                placeholder: 'Paste the state... [ctrl+v]',
+                                onChange: (value: string) => {
+                                    ctx.stateText = value;
+                                    b.invalidate(ctx);
+                                },
+                                onKeyDown: (event: b.IKeyDownUpEvent) => {
+                                    if (event.ctrl && event.which === 67) {
+                                        ctx.stateText = '';
+                                        b.invalidate();
+                                    }
                                 }
-                            }
-                        }),
-                        !!ctx.stateText && button({
-                            title: 'GO',
-                            style: buttonStyles.actionButton,
-                            onClick: () => {
-                                if (!ctx.stateText)
-                                    return;
+                            }),
+                            b.withKey(
+                                button({
+                                    title: 'GO',
+                                    isDisabled: !ctx.stateText,
+                                    onClick: () => {
+                                        if (!ctx.stateText)
+                                            return;
 
-                                f.setState(cursor, new Function(`return ${ctx.stateText};`)());
-                                b.invalidate();
-                            }
-                        })
-                    ]),
+                                        f.setState(cursor, new Function(`return ${ctx.stateText};`)());
+                                        b.invalidate();
+                                    }
+                                }),
+                                'go-copy')
+                        ],
+                        copyContainer),
                     b.styledDiv(rows({
                         rows: ctx.data.stateStamps.map((stateStamp, index) => {
                             return {

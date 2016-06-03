@@ -3,8 +3,6 @@ import row, { IRowData } from './row';
 
 const rowsStyle = b.styleDef({
     backgroundColor: '#ccc',
-    borderBottomStyle: 'solid',
-    borderBottomWidth: '1px',
     listStyleType: 'none',
     padding: '0px',
     margin: '0px'
@@ -27,7 +25,7 @@ export const rows = b.createComponent<IRowsData>({
         me.children = b.style(
             {
                 tag: 'ul',
-                children: !!ctx.data.rows && ctx.data.rows.map(rd => row(rd))
+                children: !!ctx.data.rows && ctx.data.rows.map((rd, idx) => b.withKey(row(rd), `state-${idx}`))
             },
             rowsStyle);
     }

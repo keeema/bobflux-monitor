@@ -1,14 +1,11 @@
 import * as b from 'bobril';
-import button, { buttonStyles } from './button';
+import button from './button';
 
 const rowStyle = b.styleDef({
-    width: '200px',
+    width: '194px',
     backgroundColor: '#ccc',
     borderBottomStyle: 'solid',
-    borderBottomWidth: '1px',
-    padding: '0px',
-    margin: '0px'
-
+    borderBottomWidth: '1px'
 });
 
 const active = b.styleDef({
@@ -16,6 +13,13 @@ const active = b.styleDef({
     borderColor: '#6699FF',
     borderStyle: 'solid',
     borderWidth: '3px'
+});
+
+const inActive = b.styleDef({
+    borderColor: '#ccc',
+    borderWidth: '2px',
+    borderBottomColor: '#000',
+    padding: '3px 3px 3px 3px'
 });
 
 const actionButtonsContainer = b.styleDef({});
@@ -38,9 +42,7 @@ export const row = b.createVirtualComponent<IRowData>({
         me.tag = 'li';
 
         b.style(me, rowStyle);
-        if (ctx.data.isActive) {
-            b.style(me, active);
-        }
+        b.style(me, ctx.data.isActive ? active : inActive);
 
         me.children = [
             { tag: 'div', children: 'Order: ' + ctx.data.header },
@@ -48,8 +50,8 @@ export const row = b.createVirtualComponent<IRowData>({
             { tag: 'div', children: 'Frames: ' + ctx.data.frames },
             b.styledDiv(
                 [
-                    button({ title: 'GO', style: buttonStyles.actionButton, onClick: ctx.data.onGo, float: 'left', width: '50%' }),
-                    button({ title: 'COPY', style: buttonStyles.actionButton, onClick: ctx.data.onCopy })
+                    button({ title: 'GO', onClick: ctx.data.onGo, float: 'left', width: '50%' }),
+                    button({ title: 'COPY', onClick: ctx.data.onCopy })
                 ],
                 actionButtonsContainer)
         ];

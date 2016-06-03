@@ -1,50 +1,75 @@
 import * as b from 'bobril';
 
-export const buttonStyles = {
-    mainButtonOpen: b.styleDef({
+export const enum ButtonType {
+    Open,
+    Close,
+    Action
+}
+
+const buttonStyles = {
+    [ButtonType.Open]: b.styleDef({
         textAlign: 'center',
-        height: '20px',
+        height: '24px',
         width: '200px',
         backgroundColor: '#ccc'
     }),
-    mainButtonClose: b.styleDef({
+    [ButtonType.Close]: b.styleDef({
         textAlign: 'center',
-        height: '20px',
+        height: '24px',
         width: '30px',
         backgroundColor: '#ccc'
     }),
-    actionButton: b.styleDef(
-        {
-            textAlign: 'center',
-            backgroundColor: '#181818',
-            color: '#fff',
-            borderStyle: 'solid',
-            borderWidth: '1px',
-            cursor: 'pointer',
-            padding: '5px',
-            height: '16px'
-        },
-        { hover: { backgroundColor: '#585858' } })
+    [ButtonType.Action]: b.styleDef({
+        textAlign: 'center',
+        backgroundColor: '#181818',
+        color: '#fff',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        cursor: 'pointer',
+        padding: '2px',
+        height: '24px'
+    })
 };
+
+const hoverActionStyle = b.styleDef({ hover: { backgroundColor: '#585858' } });
+
+const disabledStyle = b.styleDef({
+    color: '#ddd',
+    backgroundColor: '#999',
+    cursor: 'not-allowed'
+});
 
 export interface IData {
     title: string;
-    style?: b.IBobrilStyle;
+    type?: ButtonType;
     onClick: () => void;
     float?: string;
     width?: string;
+    isDisabled?: boolean;
 }
 
 interface ICtx extends b.IBobrilCtx {
     data: IData;
 }
 
-export const button = b.createVirtualComponent<IData>({
+export const button = b.createComponent<IData>({
     render(ctx: ICtx, me: b.IBobrilNode) {
-        me.children = b.styledDiv(ctx.data.title, ctx.data.style, { cssFloat: ctx.data.float, width: ctx.data.width });
+        me.style = { cssFloat: ctx.data.float, width: ctx.data.width };
+        const type = ctx.data.type === undefined ? ButtonType.Action : ctx.data.type;
+
+
+        b.style(me, buttonStyles[type]);
+        me.children = ctx.data.title;
+        me.attrs = {};
+        if (ctx.data.isDisabled) {
+            b.style(me, disabledStyle);
+        } else if (type === ButtonType.Action) {
+            b.style(me, hoverActionStyle);
+        }
+
     },
     onClick(ctx: ICtx) {
-        if (ctx.data.onClick)
+        if (ctx.data.onClick && !ctx.data.isDisabled)
             ctx.data.onClick();
         return true;
     }

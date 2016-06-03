@@ -7,7 +7,7 @@ export const mainPage = b.createComponent({
     render(ctx: b.IBobrilCtx, me: b.IBobrilNode): void {
         const state = f.getState(appCursor);
         me.children = [
-            { tag: 'p', children: 'Sample' },
+            { tag: 'h1', children: 'Sample' },
             { tag: 'button', children: 'INCREMENT', component: { onClick: increment } },
             { tag: 'p', children: '--------------------------------------' },
             { tag: 'p', children: `Counter: ${state.counter.toString()}` },
