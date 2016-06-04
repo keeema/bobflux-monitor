@@ -22,7 +22,7 @@ const scrollingStyle = b.styleDef({
     overflow: 'scroll',
     overflowX: 'hidden',
     position: 'absolute',
-    top: 62,
+    top: 100,
     right: 0,
     bottom: 0
 });
@@ -43,6 +43,7 @@ interface ICtx extends b.IBobrilCtx {
     data: IMonitorPanelData;
     stateText?: string;
     setFocusForCopy: boolean;
+    interval: number;
 }
 
 const copyContainer = b.styleDef({
@@ -51,6 +52,9 @@ const copyContainer = b.styleDef({
 
 export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
     return b.createComponent({
+        init(ctx: ICtx) {
+            ctx.interval = 500;
+        },
         render(ctx: ICtx, me: b.IBobrilNode) {
             b.style(me, containerStyle);
             b.style(me, ctx.data.isOpen && openedContainerStyle);
@@ -86,7 +90,6 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                                 }
                             }),
                             b.withKey(
-
                                 button({
                                     title: 'GO',
                                     isDisabled: !ctx.stateText,
@@ -99,6 +102,28 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                                     }
                                 }),
                                 'go-copy')
+                        ],
+                        copyContainer),
+                    b.styledDiv(
+                        [
+                            textbox({
+                                value: ctx.interval.toString(),
+                                setFocus: ctx.setFocusForCopy,
+                                style: textboxStyles.copyState,
+                                float: 'left',
+                                placeholder: 'miliseconds',
+                                onChange: (value: string) => {
+                                    if (!isNaN(parseFloat(value)))
+                                        ctx.interval = parseFloat(value);
+                                }
+                            }),
+                            b.withKey(
+                                button({
+                                    title: 'PLAY',
+                                    isDisabled: !ctx.data.stateStamps.length,
+                                    onClick: () => { play(ctx, cursor); }
+                                }),
+                                'play')
                         ],
                         copyContainer),
                     b.styledDiv(
@@ -130,3 +155,18 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
 };
 
 export default monitorGenericFactory;
+
+function play<TState extends f.IState>(ctx: ICtx, cursor: f.ICursor<TState>, isStart = true) {
+    const state = f.getState(cursor);
+    let currentIdx = ctx.data.stateStamps.map(stamp => stamp.state).indexOf(state);
+
+    if (currentIdx === ctx.data.stateStamps.length - 1 && isStart) {
+        currentIdx = -1;
+    }
+
+    if (currentIdx < ctx.data.stateStamps.length - 1) {
+        f.setState(cursor, ctx.data.stateStamps[currentIdx + 1].state);
+        b.invalidate();
+        setTimeout(() => play(ctx, cursor, false), ctx.interval);
+    }
+}
