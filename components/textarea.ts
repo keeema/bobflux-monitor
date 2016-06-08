@@ -1,13 +1,17 @@
 import * as b from 'bobril';
 
-export const textboxStyles = {
+export const textareaStyles = {
     copyState: b.styleDef({
+        width: 150,
+        height: 72
+    }),
+    intervalStyle: b.styleDef({
         width: 150,
         height: 24
     })
 };
 
-export interface ITextboxData {
+export interface ITextareaData {
     value?: string;
     onKeyDown?: (event: b.IKeyDownUpEvent) => void;
     onChange?: (value: string) => void;
@@ -18,7 +22,7 @@ export interface ITextboxData {
 }
 
 interface ICtx extends b.IBobrilCtx {
-    data: ITextboxData;
+    data: ITextareaData;
     value: string;
 }
 
@@ -29,7 +33,8 @@ function focus(ctx: ICtx, element: HTMLInputElement) {
     }
 };
 
-export const textbox = b.createComponent<ITextboxData>({
+export const textarea = b.createComponent<ITextareaData>({
+    id: 'bobflux-monitor-textarea',
     render(ctx: ICtx, me: b.IBobrilNode) {
         if (ctx.data.value !== undefined && ctx.data.value !== null) {
             ctx.value = ctx.data.value;
@@ -37,8 +42,15 @@ export const textbox = b.createComponent<ITextboxData>({
             ctx.value = '';
         }
 
-        me.tag = 'input';
-        me.attrs = { type: 'text', value: ctx.value, placeholder: ctx.data.placeholder };
+        me.tag = 'textarea';
+        me.attrs = { 
+            rows: 1, 
+            value: ctx.value, 
+            placeholder: ctx.data.placeholder, 
+            wrap: 'soft', 
+            resize: 'none',
+            spellcheck: false 
+        };
 
         b.style(me, ctx.data.style, { cssFloat: ctx.data.float });
     },
@@ -60,4 +72,4 @@ export const textbox = b.createComponent<ITextboxData>({
     }
 });
 
-export default textbox;
+export default textarea;

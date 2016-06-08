@@ -38,6 +38,7 @@ interface ICtx extends b.IBobrilCtx {
 }
 
 export const row = b.createVirtualComponent<IRowData>({
+    id: 'bobflux-monitor-row',
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.tag = 'li';
 

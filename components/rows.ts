@@ -19,6 +19,7 @@ interface ICtx extends b.IBobrilCtx {
 }
 
 export const rows = b.createComponent<IRowsData>({
+    id: 'bobflux-monitor-rows',
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.tag = 'div';
         b.style(me, rowsWrapperStyle);

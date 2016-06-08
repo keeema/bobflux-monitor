@@ -3,7 +3,8 @@ import * as b from 'bobril';
 export const enum ButtonType {
     Open,
     Close,
-    Action
+    Action,
+    Go
 }
 
 const buttonStyles = {
@@ -28,6 +29,16 @@ const buttonStyles = {
         cursor: 'pointer',
         padding: 2,
         height: 24
+    }),
+    [ButtonType.Go]: b.styleDef({
+        textAlign: 'center',
+        backgroundColor: '#181818',
+        color: '#fff',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        cursor: 'pointer',
+        padding: 2,
+        height: 72
     })
 };
 
@@ -53,6 +64,7 @@ interface ICtx extends b.IBobrilCtx {
 }
 
 export const button = b.createComponent<IData>({
+    id: 'bobflux-monitor-button',
     render(ctx: ICtx, me: b.IBobrilNode) {
         me.style = { cssFloat: ctx.data.float, width: ctx.data.width };
         const type = ctx.data.type === undefined ? ButtonType.Action : ctx.data.type;
@@ -66,9 +78,10 @@ export const button = b.createComponent<IData>({
             b.style(me, hoverActionStyle);
         }
     },
-    onClick(ctx: ICtx) {
+    onClick(ctx: ICtx, event: b.IBobrilMouseEvent) {
         if (ctx.data.onClick && !ctx.data.isDisabled)
             ctx.data.onClick();
+            
         return true;
     }
 });

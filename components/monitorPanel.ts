@@ -2,7 +2,7 @@ import * as b from 'bobril';
 import * as f from 'fun-model';
 import * as stringHelpers from '../helpers/string';
 import button, { ButtonType } from './button';
-import textbox, { textboxStyles } from './textbox';
+import textarea, { textareaStyles } from './textarea';
 import rows from './rows';
 
 const containerStyle = b.styleDef({
@@ -22,7 +22,7 @@ const scrollingStyle = b.styleDef({
     overflow: 'scroll',
     overflowX: 'hidden',
     position: 'absolute',
-    top: 100,
+    top: 148,
     right: 0,
     bottom: 0
 });
@@ -52,6 +52,7 @@ const copyContainer = b.styleDef({
 
 export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor<TState>) {
     return b.createComponent({
+        id: 'bobflux-monitor-panel',
         init(ctx: ICtx) {
             ctx.interval = 500;
         },
@@ -72,10 +73,10 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                 !!ctx.data.isOpen && [
                     b.styledDiv(
                         [
-                            textbox({
+                            textarea({
                                 value: ctx.stateText,
                                 setFocus: ctx.setFocusForCopy,
-                                style: textboxStyles.copyState,
+                                style: textareaStyles.copyState,
                                 float: 'left',
                                 placeholder: 'Paste the state... [ctrl+v]',
                                 onChange: (value: string) => {
@@ -92,6 +93,7 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                             b.withKey(
                                 button({
                                     title: 'GO',
+                                    type: ButtonType.Go,
                                     isDisabled: !ctx.stateText,
                                     onClick: () => {
                                         if (!ctx.stateText)
@@ -106,10 +108,9 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                         copyContainer),
                     b.styledDiv(
                         [
-                            textbox({
+                            textarea({
                                 value: ctx.interval.toString(),
-                                setFocus: ctx.setFocusForCopy,
-                                style: textboxStyles.copyState,
+                                style: textareaStyles.intervalStyle,
                                 float: 'left',
                                 placeholder: 'miliseconds',
                                 onChange: (value: string) => {
