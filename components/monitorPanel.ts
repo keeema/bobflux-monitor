@@ -179,5 +179,6 @@ function play<TState extends f.IState>(ctx: ICtx, cursor: f.ICursor<TState>, sta
     } else {
         ctx.isPlaying = false;
         ctx.data.playToggled(false);
+        b. invalidate(ctx);
     }
 }
