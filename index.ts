@@ -2,13 +2,6 @@ import * as b from 'bobril';
 import * as f from 'fun-model';
 import monitorGenericFactory, { IMonitorPanelData } from './components/monitorPanel';
 
-function createDefaultData(): IMonitorPanelData {
-    return {
-        isOpen: false,
-        stateStamps: []
-    };
-}
-
 function createStateStamp<TState extends f.IState>(state: TState) {
     return {
         change: 'change',
@@ -18,13 +11,22 @@ function createStateStamp<TState extends f.IState>(state: TState) {
     };
 }
 
-// TODO: update fun-model to recognize calling action from stack
-
+// TODO: update fun-model to recognize the calling action from stack
 export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key: '' }): (m, p) => void {
     const createMonitor = monitorGenericFactory(cursor);
-    const data = createDefaultData();
     let routeUrl = '';
+    let isPlaying = false;
+
+    const data: IMonitorPanelData = {
+        isOpen: false,
+        stateStamps: [],
+        playToggled: (newIsPlaying) => isPlaying = newIsPlaying
+    };
+
     const callback = (m, p) => {
+        if (isPlaying)
+            return;
+            
         if (m && m.indexOf('has been initialized') >= 0) {
             data.stateStamps = [createStateStamp(f.getState(cursor))];
         } else if (m && p && m.indexOf('Current state') >= 0) {

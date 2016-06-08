@@ -37,6 +37,7 @@ interface IStateStamp {
 export interface IMonitorPanelData {
     isOpen: boolean;
     stateStamps: IStateStamp[];
+    playToggled: (value: boolean) => void;
 }
 
 interface ICtx extends b.IBobrilCtx {
@@ -44,6 +45,7 @@ interface ICtx extends b.IBobrilCtx {
     stateText?: string;
     setFocusForCopy: boolean;
     interval: number;
+    isPlaying: boolean;
 }
 
 const copyContainer = b.styleDef({
@@ -55,6 +57,7 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
         id: 'bobflux-monitor-panel',
         init(ctx: ICtx) {
             ctx.interval = 500;
+            ctx.isPlaying = false;
         },
         render(ctx: ICtx, me: b.IBobrilNode) {
             b.style(me, containerStyle);
@@ -121,7 +124,7 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
                             b.withKey(
                                 button({
                                     title: 'PLAY',
-                                    isDisabled: !ctx.data.stateStamps.length,
+                                    isDisabled: !ctx.data.stateStamps.length || ctx.isPlaying,
                                     onClick: () => { play(ctx, cursor); }
                                 }),
                                 'play')
@@ -157,17 +160,24 @@ export function monitorGenericFactory<TState extends f.IState>(cursor: f.ICursor
 
 export default monitorGenericFactory;
 
-function play<TState extends f.IState>(ctx: ICtx, cursor: f.ICursor<TState>, isStart = true) {
-    const state = f.getState(cursor);
-    let currentIdx = ctx.data.stateStamps.map(stamp => stamp.state).indexOf(state);
-
-    if (currentIdx === ctx.data.stateStamps.length - 1 && isStart) {
-        currentIdx = -1;
+function play<TState extends f.IState>(ctx: ICtx, cursor: f.ICursor<TState>, startIndex = -1) {
+    if (startIndex === -1) {
+        ctx.isPlaying = true;
+        ctx.data.playToggled(true);
+        const state = f.getState(cursor);
+        startIndex = ctx.data.stateStamps.map(stamp => stamp.state).indexOf(state);
+        if (startIndex === ctx.data.stateStamps.length - 1) {
+            startIndex = -1;
+        }
     }
 
-    if (currentIdx < ctx.data.stateStamps.length - 1) {
-        f.setState(cursor, ctx.data.stateStamps[currentIdx + 1].state);
+    if (startIndex < ctx.data.stateStamps.length - 1) {
+        const newIndex = startIndex + 1;
+        f.setState(cursor, ctx.data.stateStamps[newIndex].state);
         b.invalidate();
-        setTimeout(() => play(ctx, cursor, false), ctx.interval);
+        setTimeout(() => play(ctx, cursor, newIndex), ctx.interval);
+    } else {
+        ctx.isPlaying = false;
+        ctx.data.playToggled(false);
     }
 }
