@@ -1,6 +1,6 @@
 {
   "name": "bobflux-monitor",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Component for time travelling in bobflux/fun-model application state history.",
   "typescript": {
     "main": "index.ts"
