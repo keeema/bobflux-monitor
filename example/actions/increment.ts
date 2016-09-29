@@ -1,5 +1,5 @@
 import * as f from 'fun-model';
-import appCursor from '../state';
+import { appCursor } from '../state';
 
 export const increment = f.createAction(appCursor, state => f.shallowCopy(state, copy => {
     copy.counter++;
@@ -7,5 +7,3 @@ export const increment = f.createAction(appCursor, state => f.shallowCopy(state,
     copy.popup = () => alert(`Current value is ${copy.counter}.`);
     copy.history = [...state.history, copy.counter];
 }));
-
-export default increment;

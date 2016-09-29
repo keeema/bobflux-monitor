@@ -45,4 +45,5 @@ export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key:
     return callback;
 }
 
+export const monitor = init;
 export default init;

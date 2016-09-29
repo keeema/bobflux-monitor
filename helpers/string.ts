@@ -6,12 +6,12 @@ export function allToString(obj): string {
         return 'undefined';
 
     if (Array.isArray(obj))
-        return `[${(<[]>obj).map(item => allToString(item))}]`;
-    
-    if(obj instanceof Date){
+        return `[${(<Object[]>obj).map(item => allToString(item))}]`;
+
+    if (obj instanceof Date) {
         return `new Date(${(<Date>obj).getTime()})`;
     }
-    
+
     if (typeof obj === 'object') {
         return `{ ${Object.keys(obj).map(key => `${key}: ${allToString(obj[key])}`).join(', ')} }`;
     }

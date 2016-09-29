@@ -8,15 +8,15 @@ Import package and provide initialized bobflux-monitor to bobflux bootstrap.
 
 ```typescript
 import { bootstrap } from 'bobflux';
-import monitor from 'bobflux-monitor';
+import * as monitor from 'bobflux-monitor';
 
-bootstrap(createDefaultState(), monitor());
+bootstrap(createDefaultState(), monitor.init());
 ```
 ```typescript
 import { bootstrap } from 'fun-model';
 import monitor from 'bobflux-monitor';
 
-bootstrap(createDefaultState(), b.invalidate,  monitor());
+bootstrap(createDefaultState(), b.invalidate,  monitor.init());
 ```
 
 # Development

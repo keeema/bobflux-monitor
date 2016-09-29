@@ -19,5 +19,3 @@ export const createDefaultState = (): IAppState => {
 export const appCursor: f.ICursor<IAppState> = {
     key: ''
 };
-
-export default appCursor;
