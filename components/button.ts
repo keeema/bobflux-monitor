@@ -78,7 +78,7 @@ export const button = b.createComponent<IData>({
             b.style(me, hoverActionStyle);
         }
     },
-    onClick(ctx: ICtx, event: b.IBobrilMouseEvent) {
+    onClick(ctx: ICtx) {
         if (ctx.data.onClick && !ctx.data.isDisabled)
             ctx.data.onClick();
             

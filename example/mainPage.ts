@@ -4,7 +4,7 @@ import { appCursor } from './state';
 import { increment } from './actions/increment';
 
 export const mainPage = b.createComponent({
-    render(ctx: b.IBobrilCtx, me: b.IBobrilNode): void {
+    render(_ctx: b.IBobrilCtx, me: b.IBobrilNode): void {
         const state = f.getState(appCursor);
         me.children = <b.IBobrilChildren>[
             { tag: 'h1', children: 'Sample' },

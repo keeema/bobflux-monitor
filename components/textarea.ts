@@ -52,12 +52,12 @@ export const textarea = b.createComponent<ITextareaData>({
             spellcheck: false 
         };
 
-        b.style(me, ctx.data.style, { cssFloat: ctx.data.float });
+        b.style(me, !!ctx.data.style, { cssFloat: ctx.data.float });
     },
-    postInitDom(ctx: ICtx, me: b.IBobrilCacheNode, element: HTMLElement) {
+    postInitDom(ctx: ICtx, _me: b.IBobrilCacheNode, element: HTMLElement) {
         focus(ctx, <HTMLInputElement>element);
     },
-    postUpdateDom(ctx: ICtx, me: b.IBobrilCacheNode, element: HTMLElement) {
+    postUpdateDom(ctx: ICtx, _me: b.IBobrilCacheNode, element: HTMLElement) {
         focus(ctx, <HTMLInputElement>element);
     },
     onChange(ctx: ICtx, value: string) {

@@ -1,4 +1,4 @@
-export function allToString(obj): string {
+export function allToString(obj?: Object[] | Date | Object | string): string {
     if (obj === null)
         return 'null';
 
@@ -13,11 +13,11 @@ export function allToString(obj): string {
     }
 
     if (typeof obj === 'object') {
-        return `{ ${Object.keys(obj).map(key => `${key}: ${allToString(obj[key])}`).join(', ')} }`;
+        return `{ ${Object.keys(obj).map(key => `${key}: ${allToString((<{ [key: string]: string }>obj)[key])}`).join(', ')} }`;
     }
 
     if (typeof obj === 'string')
         return `'${obj}'`;
 
-    return obj.toString();
+    return (<{ toString: Function }>obj).toString();
 }
