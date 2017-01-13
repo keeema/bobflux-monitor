@@ -1,4 +1,4 @@
-export function allToString(obj?: Object[] | Date | Object | string): string {
+export function allToString(obj?: Object[] | Date | Object | string | null): string {
     if (obj === null)
         return 'null';
 

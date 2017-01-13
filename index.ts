@@ -12,7 +12,7 @@ function createStateStamp<TState extends f.IState>(state: TState) {
 }
 
 // TODO: update fun-model to recognize the calling action from stack
-export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key: '' }): (m, p) => void {
+export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key: '' }): (message: string, params?: Object[]) => void {
     const createMonitor = monitorGenericFactory(cursor);
     let routeUrl = '';
     let isPlaying = false;
@@ -23,10 +23,10 @@ export function init<TState extends f.IState>(cursor: f.ICursor<TState> = { key:
         playToggled: (newIsPlaying) => isPlaying = newIsPlaying
     };
 
-    const callback = (m, p) => {
+    const callback = (m: string, p?: Object[]) => {
         if (isPlaying)
             return;
-            
+
         if (m && m.indexOf('has been initialized') >= 0) {
             data.stateStamps = [createStateStamp(f.getState(cursor))];
         } else if (m && p && m.indexOf('Current state') >= 0) {

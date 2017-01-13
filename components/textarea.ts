@@ -1,6 +1,9 @@
 import * as b from 'bobril';
 
 export const textareaStyles = {
+    default: {
+        resize: 'none'
+    },
     copyState: b.styleDef({
         width: 150,
         height: 72
@@ -43,16 +46,15 @@ export const textarea = b.createComponent<ITextareaData>({
         }
 
         me.tag = 'textarea';
-        me.attrs = { 
-            rows: 1, 
-            value: ctx.value, 
-            placeholder: ctx.data.placeholder, 
-            wrap: 'soft', 
-            resize: 'none',
-            spellcheck: false 
+        me.attrs = {
+            rows: 1,
+            value: ctx.value,
+            placeholder: ctx.data.placeholder,
+            wrap: 'soft',
+            spellcheck: false
         };
 
-        b.style(me, !!ctx.data.style, { cssFloat: ctx.data.float });
+        b.style(me, !!ctx.data.style && ctx.data.style, textareaStyles.default, { cssFloat: ctx.data.float });
     },
     postInitDom(ctx: ICtx, _me: b.IBobrilCacheNode, element: HTMLElement) {
         focus(ctx, <HTMLInputElement>element);

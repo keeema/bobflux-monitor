@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": false,
@@ -22,18 +22,6 @@
     "compileOnSave": false,
     "files": [
         "C:/Users/t.rut/AppData/Roaming/npm/node_modules/bobril-build/typings/jasmine/jasmine.d.ts",
-        "components/button.ts",
-        "components/monitorPanel.ts",
-        "components/row.ts",
-        "components/rows.ts",
-        "components/textarea.ts",
-        "example.ts",
-        "example/actions/increment.ts",
-        "example/mainPage.ts",
-        "example/state.ts",
-        "helpers/string.ts",
-        "index.ts",
-        "node_modules/bobril/jsx.d.ts",
-        "spec/string.spec.ts"
+        "node_modules/bobril/jsx.d.ts"
     ]
 }
