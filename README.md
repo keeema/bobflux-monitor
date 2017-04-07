@@ -10,13 +10,13 @@ Import package and provide initialized bobflux-monitor to bobflux bootstrap.
 import { bootstrap } from 'bobflux';
 import * as monitor from 'bobflux-monitor';
 
-bootstrap(createDefaultState(), monitor.init());
+bootstrap(createDefaultState(), { debugCallback: monitor.init() });
 ```
 ```typescript
 import { bootstrap } from 'fun-model';
 import monitor from 'bobflux-monitor';
 
-bootstrap(createDefaultState(), b.invalidate,  monitor.init());
+bootstrap(createDefaultState(), b.invalidate,  { debugCallback: monitor.init() });
 ```
 
 # Development
