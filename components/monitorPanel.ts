@@ -27,7 +27,7 @@ const scrollingStyle = b.styleDef({
     bottom: 0
 });
 
-interface IStateStamp {
+export interface IStateStamp {
     change: string;
     state: f.IState;
     time: Date;
