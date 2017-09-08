@@ -22,14 +22,15 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "types": []
     },
     "include": [
         "**/*"
     ],
     "compileOnSave": false,
     "files": [
-        "C:/Users/m.beran/AppData/Roaming/npm/node_modules/bobril-build/typings/jasmine/jasmine.d.ts",
+        "C:/Users/t.rut/AppData/Roaming/npm/node_modules/bobril-build/typings/jasmine/jasmine.d.ts",
         "node_modules/bobril/jsx.d.ts"
     ]
 }
