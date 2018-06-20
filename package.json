@@ -1,6 +1,6 @@
 {
   "name": "bobflux-monitor",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "Component for time travelling in bobflux/fun-model application state history.",
   "typescript": {
     "main": "index.ts"
@@ -29,22 +29,25 @@
     "history",
     "component"
   ],
-  "dependencies": {
-    "bobril": "^6.3.3||^7.0.0",
-    "fun-model": "^5.0.1||^6.1.0"
+  "devDependencies": {
+    "bb-tslint-plugin": "^1.1.1"
   },
-  "bobril": {    
+  "dependencies": {
+    "bobril": "^8.9.2",
+    "fun-model": "^6.3.0"
+  },
+  "bobril": {
     "example": "example.ts",
     "title": "Bobflux-monitor",
     "compilerOptions": {
-      "declaration": true,
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noImplicitReturns": true,
-      "noFallthroughCasesInSwitch": true,
-      "strictNullChecks": true
+      "compilerOptions": {
+        "declaration": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true
+      }
     }
   }
 }
